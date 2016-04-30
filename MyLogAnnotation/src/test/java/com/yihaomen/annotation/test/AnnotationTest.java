@@ -21,7 +21,7 @@ public class AnnotationTest {
 
     @Test
     public void testCompute() {
-    	log.debug("in testCompute():>>>");
+    	log.debug("in testCompute():");
     	computeService.compute(10, "s1", 11, "s2");
     }
 }
