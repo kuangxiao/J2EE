@@ -7,6 +7,7 @@
 <title>Main Page</title>
 </head>
 
-<body>hello web mvc
-</body>
+ <body>
+   hello web mvc
+ </body>
 </html>

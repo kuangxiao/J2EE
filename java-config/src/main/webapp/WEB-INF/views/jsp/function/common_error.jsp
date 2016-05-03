@@ -10,14 +10,15 @@
 <META http-equiv="Cache-Control" content="no-cache">
 <META http-equiv="Expire" content="0">
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/static/js/jquery-1.11.0.min.js"></script>
+	src="${pageContext.request.contextPath}/static/js/jquery-1.11.0.min.js">
+	
+</script>
 
 <script type="text/javascript">
-			$(function(){
-				
-			});
-			
-		</script>
+	$(function() {
+
+	});
+</script>
 
 <style type="text/css">
 #contentDiv table {
@@ -31,77 +32,121 @@
 }
 
 #contentDiv
+
  
+
 input
 ,
 #contentDiv
+
  
+
 textarea
 ,
 {
 border-top
+
+
 :
+
  
+
 1
 px
- 
-solid
- 
-#555
-;
 
-				
+ 
+
+solid
+
+ 
+
+#555
+
+
+;
 border-left
+
+
 :
+
  
+
 1
 px
- 
-solid
- 
-#555
-;
 
-				
+ 
+
+solid
+
+ 
+
+#555
+
+
+;
 border-bottom
+
+
 :
+
  
+
 1
 px
- 
-solid
- 
-#555
-;
 
-				
+ 
+
+solid
+
+ 
+
+#555
+
+
+;
 border-right
+
+
 :
+
  
+
 1
 px
+
  
+
 solid
- 
-#555
-;
 
-				
-padding
-:
  
+
+#555
+
+
+;
+padding
+
+
+:
+
+ 
+
 1
 px
-;
 
-				
+
+;
 color
-:
- 
-#333
-;
 
-			
+
+:
+
+ 
+
+#333
+
+
+;
 }
 .commonInput {
 	border-top: 1px solid #555;
@@ -113,24 +158,36 @@ color
 }
 
 #contentDiv
+
  
+
 input
+
+
 .noborder
 ,
 #contentDiv
+
  
+
 textarea
+
+
 .noborder
 ,
 {
 border
+
+
 :
+
  
+
 0
 px
-;
 
-			
+
+;
 }
 select {
 	position: relative;
