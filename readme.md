@@ -1,2 +1,2 @@
 from kuangxiao.
-Add some Check thing!
+Add some thing!
