@@ -1,2 +1,2 @@
-From kuangxiao.
-Add some thing! Add a diff.
+From kuangxiao.Add a diff.
+Add some thing! 
