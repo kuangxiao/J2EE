@@ -1,2 +1,2 @@
-From kuangxiao.Add a reset.
+From kuangxiao.Add a diff.
 Add some thing! 
