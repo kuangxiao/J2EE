@@ -52,9 +52,7 @@
 				<td>${product.price}</td>
 
 
-				<td><a
-					href="${flowExecutionUrl}&_eventId=addToCart&productId=${product.id}">[add
-						to cart]</a></td>
+				<td><a href="${flowExecutionUrl}&_eventId=addToCart&productId=${product.id}">[add to cart]</a> </td>
 
 
 			</tr>

@@ -13,7 +13,6 @@
 通过指定 _eventId 参数的值，表明了客户的行为，
 从而导致相应事件的发生，在 Spring Web Flow 的定义文件中可以通过 evaluate 元素来指定要处理的业务逻辑
 	 -->
-	<a href="${flowExecutionUrl}&_eventId=returnToIndex">Return to
-		index</a>
+	<a href="${flowExecutionUrl}&_eventId=returnToIndex">Return to index</a>
 </body>
 </html>

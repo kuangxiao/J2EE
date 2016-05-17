@@ -4,7 +4,7 @@
 	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
     http://www.springframework.org/schema/webflow-config 
-    http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+    http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.4.xsd">
 
 	<!-- FlowExecutor 是 Spring Web Flow 的一个核心接口，启动某个 flow ，都要通过这个接口来进行 -->
 	<webflow:flow-executor id="flowExecutor" />
