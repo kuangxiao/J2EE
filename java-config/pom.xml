@@ -7,7 +7,7 @@
 	<artifactId>java-config</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>java_config</name>
+	<name>java-config</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -177,7 +177,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>webmvc</finalName>
+		<finalName>java-config</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
