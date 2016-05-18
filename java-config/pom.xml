@@ -55,6 +55,7 @@
 			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<!-- 单元测试 mockito -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -62,6 +63,7 @@
 			<version>1.9.5</version>
 			<scope>test</scope>
 		</dependency>
+		
 		<!-- 单元测试 json-path -->
 		<dependency>
 			<groupId>com.jayway.jsonpath</groupId>
@@ -80,6 +82,18 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>			
+			<exclusions>
+				<exclusion>
+				  <groupId>com.sun.mail</groupId>
+			      <artifactId>javax.mail</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- tomcat servlet -->
@@ -115,6 +129,7 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>3.2.4.RELEASE</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
@@ -127,6 +142,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.3.5.Final</version>
 		</dependency>
+		
 		<!-- aop aspectj -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -167,6 +183,7 @@
 			<artifactId>ehcache-core</artifactId>
 			<version>2.6.9</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>

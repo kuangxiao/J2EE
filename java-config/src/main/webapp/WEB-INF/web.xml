@@ -8,13 +8,13 @@
 	<session-config>
 		<session-timeout>60</session-timeout>
 	</session-config>
+	
 	<!-- 欢迎页面 -->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
-
 
 	<!-- 
 	<1.使用xml风格测试时，需要先将/src/main/java/web/config下的全部类移动到项目外，并开启web.xml中的相关配置> 
