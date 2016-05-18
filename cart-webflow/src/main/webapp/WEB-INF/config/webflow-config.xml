@@ -23,4 +23,5 @@
 	<bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
 		<property name="viewResolvers" ref="viewResolver" />
 	</bean>
+	
 </beans>
