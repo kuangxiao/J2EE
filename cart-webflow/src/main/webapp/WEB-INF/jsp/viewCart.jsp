@@ -43,6 +43,7 @@
 	</c:choose>
 
 	<a href="${flowExecutionUrl}&_eventId=submit">Submit</a>
+	
 	<h2>Products for Your Choice</h2>
 
 	<table>
