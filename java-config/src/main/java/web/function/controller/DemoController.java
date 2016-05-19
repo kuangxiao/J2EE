@@ -57,16 +57,17 @@ public class DemoController {
 		return "demo";
 	}
 
-	/**                                                          
-	* 描述 : <描述函数实现的功能>. <br> 
-	*<p> 
-		<@AuthenticationPrincipal,负责绑定验证后的用户>  
-	 </p>                                                                                                                                                                                                                                                
-	* @param user
-	* @param id
-	* @param model
-	* @return                                                                                                      
-	*/  
+	/**
+	 * 描述 : <描述函数实现的功能>. <br>
+	 * <p>
+	 * <@AuthenticationPrincipal,负责绑定验证后的用户>
+	 * </p>
+	 * 
+	 * @param user
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/{id}.do")
 	public String demo02(@PathVariable("id") Long id, Model model) {
 		logger.info("demo02  id==" + id);
@@ -82,35 +83,31 @@ public class DemoController {
 		return "demo";
 	}
 
-	@RequestMapping(value = "/xml/write/{id}.xml", produces = { MediaType.APPLICATION_XML_VALUE
-			+ ";charset=UTF-8" })
+	@RequestMapping(value = "/xml/write/{id}.xml", produces = { MediaType.APPLICATION_XML_VALUE + ";charset=UTF-8" })
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public Demo handleWriteXML(@PathVariable("id") Long id, Model model) {
 		logger.info("handleWriteXML  id==" + id);
 		Demo demo = demoService.getById(id);
-		
-		//@DeclareParents
-		DemoDeclareParentsService declareParents = (DemoDeclareParentsService)demoService;
+
+		// @DeclareParents
+		DemoDeclareParentsService declareParents = (DemoDeclareParentsService) demoService;
 		logger.info("@DeclareParents===" + declareParents.printString("@DeclareParents is ok"));
-		
+
 		return demo;
 	}
 
-	@RequestMapping(value = "/xml/write/{id}/{name}.do", produces = { MediaType.APPLICATION_XML_VALUE
-			+ ";charset=UTF-8" })
+	@RequestMapping(value = "/xml/write/{id}/{name}.do", produces = { MediaType.APPLICATION_XML_VALUE + ";charset=UTF-8" })
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public Demo handleWriteXMLDo(@PathVariable("id") Long id,
-			@PathVariable("name") String name, Model model) {
+	public Demo handleWriteXMLDo(@PathVariable("id") Long id, @PathVariable("name") String name, Model model) {
 		logger.info("handleWriteXMLDo  id==" + id);
 		Demo demo = demoService.getByName(id, name);
 		demoService.save(demo);// 捕获异常
 		return demo;
 	}
 
-	@RequestMapping(value = "/json/write/{id}.json", produces = { MediaType.APPLICATION_JSON_VALUE
-			+ ";charset=UTF-8" })
+	@RequestMapping(value = "/json/write/{id}.json", produces = { MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8" })
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public Demo handleWriteJSON(@PathVariable("id") Long id, Model model) {
@@ -124,8 +121,7 @@ public class DemoController {
 		// 因为使用了属性拦截器对日期字符串yyyy-MM-dd自动转换为date类型
 		String requestBody = "{\"name\":\"王五\",\"age\":30,\"createDate\":\"2014-08-21\",\"modifyDate\":\"2014-08-30\"}";
 		try {
-			String result = HttpClientUtil.httpPost(
-					"http://localhost:8080/webmvc/demorest/save", requestBody,
+			String result = HttpClientUtil.httpPost("http://localhost:8080/webmvc/demorest/save", requestBody,
 					MediaType.APPLICATION_JSON_VALUE);
 			logger.info("result======" + result);
 		} catch (Exception e) {
@@ -139,9 +135,8 @@ public class DemoController {
 		// 因为使用了属性拦截器对日期字符串yyyy-MM-dd自动转换为date类型
 		String requestBody = "<demo><age>40</age><createDate>2014-08-20</createDate><modifyDate>2014-08-28</modifyDate><name>赵四</name></demo>";
 		try {
-			String result = HttpClientUtil.httpPost(
-					"http://localhost:8080/webmvc/demorest/savexml",
-					requestBody, MediaType.APPLICATION_XML_VALUE);
+			String result = HttpClientUtil.httpPost("http://localhost:8080/webmvc/demorest/savexml", requestBody,
+					MediaType.APPLICATION_XML_VALUE);
 			logger.info("result======" + result);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -155,22 +150,22 @@ public class DemoController {
 		demoService.delete(new Demo());
 
 	}
-	
-	@RequestMapping(value = "/save",method = RequestMethod.POST)
-	public String handleSave(Demo demo , Model model) {
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String handleSave(Demo demo, Model model) {
 		logger.info("==========handleSave==============");
 		demoService.save(demo);
 		model.addAttribute("demo", demo);
 		model.addAttribute("id", demo.getId());
 		return "demo";
-		
+
 	}
-	
+
 	@RequestMapping(value = "/presave")
 	public String handlePreSave(Model model) {
 		logger.info("==========handlePreSave==============");
-		
+
 		return "savedemo";
-		
+
 	}
 }

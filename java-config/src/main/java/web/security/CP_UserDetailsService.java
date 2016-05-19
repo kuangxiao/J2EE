@@ -36,7 +36,7 @@ public class CP_UserDetailsService implements UserDetailsService {
 	private static final Logger logger = Logger.getLogger(CP_UserDetailsService.class);
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {		
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.info("CP_UserDetailsService loadUserByUsername");
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));

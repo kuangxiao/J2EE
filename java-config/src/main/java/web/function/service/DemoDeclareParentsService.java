@@ -10,18 +10,18 @@
  * 2014年9月3日    |    Administrator     |     Created 
  */
 package web.function.service;
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年9月3日 上午10:24:55 
- * @author Administrator  
- * @version V1.0                             
+
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年9月3日 上午10:24:55
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 public interface DemoDeclareParentsService {
 
 	public String printString(String mes);
 }
-
-

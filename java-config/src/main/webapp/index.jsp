@@ -10,8 +10,7 @@
 <title>Index Page</title>
 </head>
 
-<frameset id="mainFrames" rows="*" cols="220,*" border="1"
-	framespacing="0">
+<frameset id="mainFrames" rows="*" cols="220,*" border="1" framespacing="0">
 	<frame src="${pageContext.request.contextPath}/left.jsp" id="leftFrame" name="leftFrame" scrolling="auto">
 	<frame src="${pageContext.request.contextPath}/main.jsp" id="main" name="main" scrolling="auto">
 </frameset>

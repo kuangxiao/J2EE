@@ -7,22 +7,24 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 
-/** 
-*Description: <应用配置类>. <br>
-*<p>
-	<负责注册除Controller等web层以外的所有bean，包括aop代理，service层，dao层，缓存，等等>
- </p>
-*Makedate:2014年9月3日 上午9:58:15 
-* @author Administrator  
-* @version V1.0                             
-*/  
+/**
+ * Description: <应用配置类>. <br>
+ * <p>
+ * <负责注册除Controller等web层以外的所有bean，包括aop代理，service层，dao层，缓存，等等>
+ * </p>
+ * Makedate:2014年9月3日 上午9:58:15
+ * 
+ * @author Administrator
+ * @version V1.0
+ */
 @Configuration
 @ComponentScan(basePackages = "web.function", excludeFilters = { @ComponentScan.Filter(type = FilterType.ANNOTATION, value = { Controller.class }) })
-@EnableAspectJAutoProxy(proxyTargetClass=true)
-//@ImportResource({ "classpath:config/context/applicationContext-hibernate4.xml" })
-@Import({CachingConfig.class,DaoConfig.class})
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+// @ImportResource({
+// "classpath:config/context/applicationContext-hibernate4.xml" })
+@Import({ CachingConfig.class, DaoConfig.class })
 public class AppConfig {
-	
+
 	/*
 	 * 
 	 * <!-- 激活自动代理功能 参看：web.function.aop.aspect.DemoAspect -->
@@ -30,14 +32,15 @@ public class AppConfig {
 	 * 
 	 * @EnableAspectJAutoProxy(proxyTargetClass=true) 与声明下面的bean作用相同
 	 */
-//	@Bean
-//	public AnnotationAwareAspectJAutoProxyCreator annotationAwareAspectJAutoProxyCreator() {
-//		logger.info("AnnotationAwareAspectJAutoProxyCreator");
-//		AnnotationAwareAspectJAutoProxyCreator aspectJAutoProxyCreator = new AnnotationAwareAspectJAutoProxyCreator();
-//		// false:使用JDK动态代理织入增强 [基于目标类的接口] true:使用CGLib动态代理织入增强[基于目标类]
-//		aspectJAutoProxyCreator.setProxyTargetClass(true);
-//		return aspectJAutoProxyCreator;
-//	}
-
+	// @Bean
+	// public AnnotationAwareAspectJAutoProxyCreator
+	// annotationAwareAspectJAutoProxyCreator() {
+	// logger.info("AnnotationAwareAspectJAutoProxyCreator");
+	// AnnotationAwareAspectJAutoProxyCreator aspectJAutoProxyCreator = new
+	// AnnotationAwareAspectJAutoProxyCreator();
+	// // false:使用JDK动态代理织入增强 [基于目标类的接口] true:使用CGLib动态代理织入增强[基于目标类]
+	// aspectJAutoProxyCreator.setProxyTargetClass(true);
+	// return aspectJAutoProxyCreator;
+	// }
 
 }

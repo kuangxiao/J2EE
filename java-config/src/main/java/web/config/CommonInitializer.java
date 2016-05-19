@@ -26,51 +26,39 @@ import org.springframework.web.util.Log4jConfigListener;
 
 import web.function.servlet.DemoServlet;
 
-/** 
- *Description: <web.xml通用设置>. <br>
- *<p>
-	<配置相关Listener，servlet，filter等等>
- </p>
- *Makedate:2014年8月18日 下午5:34:08 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <web.xml通用设置>. <br>
+ * <p>
+ * <配置相关Listener，servlet，filter等等>
+ * </p>
+ * Makedate:2014年8月18日 下午5:34:08
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 @Order(1)
-public class CommonInitializer implements WebApplicationInitializer{
+public class CommonInitializer implements WebApplicationInitializer {
 
 	@Override
-	public void onStartup(ServletContext servletContext)
-			throws ServletException {
-		
-		//Log4jConfigListener
+	public void onStartup(ServletContext servletContext) throws ServletException {
+
+		// Log4jConfigListener
 		servletContext.setInitParameter("log4jConfigLocation", "classpath:config/properties/log4j.properties");
 		servletContext.addListener(Log4jConfigListener.class);
-		
-		
-		//OpenSessionInViewFilter
+
+		// OpenSessionInViewFilter
 		OpenSessionInViewFilter hibernateSessionInViewFilter = new OpenSessionInViewFilter();
-		FilterRegistration.Dynamic filterRegistration = servletContext.addFilter(
-				"hibernateFilter", hibernateSessionInViewFilter);
+		FilterRegistration.Dynamic filterRegistration = servletContext.addFilter("hibernateFilter",
+				hibernateSessionInViewFilter);
 		filterRegistration.addMappingForUrlPatterns(
 				EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE), false, "/");
-		
-		
-		//DemoServlet
+
+		// DemoServlet
 		DemoServlet demoServlet = new DemoServlet();
-		ServletRegistration.Dynamic dynamic = servletContext.addServlet(
-				"demoServlet", demoServlet);
+		ServletRegistration.Dynamic dynamic = servletContext.addServlet("demoServlet", demoServlet);
 		dynamic.setLoadOnStartup(2);
 		dynamic.addMapping("/demo_servlet");
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
-	
 }
-
-

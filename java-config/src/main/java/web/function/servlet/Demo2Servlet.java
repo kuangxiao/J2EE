@@ -50,21 +50,19 @@ public class Demo2Servlet extends HttpServlet {
 
 	@Resource(name = "demoService")
 	private DemoService demoService;
-	
-	@PostConstruct  //init-method="init"
+
+	@PostConstruct
+	// init-method="init"
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		logger.info("Demo2Servlet init start");
-		
-		
+
 		logger.info("Demo2Servlet init end");
 	}
 
-
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void service(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
 		logger.info("Demo2Servlet service start");
@@ -74,7 +72,7 @@ public class Demo2Servlet extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		String result = demoService.getById(1l).getName();
-		//Integer.valueOf(result); //测试异常显示页面
+		// Integer.valueOf(result); //测试异常显示页面
 		PrintWriter out = response.getWriter();
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		out.println("<root>\n");
@@ -87,16 +85,14 @@ public class Demo2Servlet extends HttpServlet {
 		logger.info("Demo2Servlet service end");
 	}
 
-	@PreDestroy //destroy-method="destroy"
+	@PreDestroy
+	// destroy-method="destroy"
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 		logger.info("Demo2Servlet destroy start");
-		
-		
+
 		logger.info("Demo2Servlet destroy end");
 	}
-	
-	
-	
+
 }

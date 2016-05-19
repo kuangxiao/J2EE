@@ -20,18 +20,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年9月3日 下午5:24:02 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年9月3日 下午5:24:02
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 @Configuration
-//加载资源文件
-@PropertySource({"classpath:/config/properties/db.properties"})
+// 加载资源文件
+@PropertySource({ "classpath:/config/properties/db.properties" })
 public class DataSourceConfig {
 	private static final Logger logger = Logger.getLogger(DataSourceConfig.class);
 	/*
@@ -45,7 +46,7 @@ public class DataSourceConfig {
 	String userName;
 	@Value("${jdbc.password}")
 	String passWord;
-	
+
 	@Bean(name = "dataSource")
 	public DataSource dataSource() {
 		logger.info("DataSource");
@@ -57,5 +58,3 @@ public class DataSourceConfig {
 		return dataSource;
 	}
 }
-
-

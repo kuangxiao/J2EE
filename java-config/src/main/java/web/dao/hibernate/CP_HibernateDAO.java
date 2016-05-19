@@ -18,14 +18,15 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年8月18日 下午5:46:29 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年8月18日 下午5:46:29
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 public interface CP_HibernateDAO {
 	/**
@@ -184,8 +185,6 @@ public interface CP_HibernateDAO {
 	 */
 	public void deleteAll(Collection<?> entities);
 
-	
-
 	// -------------------- HSQL ----------------------------------------------
 	/**
 	 * 
@@ -311,8 +310,7 @@ public interface CP_HibernateDAO {
 	 *            每页显示记录值
 	 * @return
 	 */
-	public List<?> findByCriteria(DetachedCriteria criteria, int startIndex,
-			int pageSize);
+	public List<?> findByCriteria(DetachedCriteria criteria, int startIndex, int pageSize);
 
 	/**
 	 * 
@@ -342,10 +340,7 @@ public interface CP_HibernateDAO {
 	 *            实体类型
 	 * @return
 	 */
-	public List<?> findEqualByEntity(Object entity, String[] propertyNames,
-			Class<?> entityClazz, String... str);
-
-	
+	public List<?> findEqualByEntity(Object entity, String[] propertyNames, Class<?> entityClazz, String... str);
 
 	/**
 	 * 
@@ -392,8 +387,7 @@ public interface CP_HibernateDAO {
 	 * @param values
 	 * @return
 	 */
-	public List<?> findByNamedParam(String queryString, String[] paramNames,
-			Object[] values);
+	public List<?> findByNamedParam(String queryString, String[] paramNames, Object[] values);
 
 	/**
 	 * 
@@ -432,12 +426,7 @@ public interface CP_HibernateDAO {
 	 * @param values
 	 * @return
 	 */
-	public List<?> findByNamedQueryAndNamedParam(String queryName,
-			String[] paramNames, Object[] values);
-
-	
-
-	
+	public List<?> findByNamedQueryAndNamedParam(String queryName, String[] paramNames, Object[] values);
 
 	/**
 	 * 描述 : <查询sql>. <br>
@@ -447,8 +436,7 @@ public interface CP_HibernateDAO {
 	 * @return
 	 */
 	public List<?> getListBySql(String sql);
-	
-	
+
 	/**
 	 * 描述 : <update sql>. <br>
 	 * <p>
@@ -458,5 +446,3 @@ public interface CP_HibernateDAO {
 	 */
 	public int updateBySQL(String sql);
 }
-
-

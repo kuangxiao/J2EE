@@ -26,7 +26,7 @@
 
 	<c:if test="${! empty results}">
 		<c:forEach items="${results}" var="obj">
-	${obj.id} || ${obj.name} || ${obj.age} <br>
+	    ${obj.id} || ${obj.name} || ${obj.age} <br>
 		</c:forEach>
 	</c:if>
 </body>
@@ -37,4 +37,5 @@
 		alert("spring mvc");
 	});
 </script>
+
 </html>

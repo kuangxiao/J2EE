@@ -43,7 +43,8 @@ import web.function.service.impl.DemoDeclareParentsServiceImpl;
 // 声明这是一个切面Bean
 @Aspect
 // @Aspect放在类头上，把这个类作为一个切面，但是这个类一定要显式的注册在Spring容器中。
-@Order(1)//多个aop作用于同一个贴入点时的先后顺序，数值越小越靠前
+@Order(1)
+// 多个aop作用于同一个贴入点时的先后顺序，数值越小越靠前
 public class DemoAspect {
 
 	private static final Logger logger = Logger.getLogger(DemoAspect.class);
@@ -65,10 +66,12 @@ public class DemoAspect {
 			logger.info("DemoAspect before " + joinPoint);
 		}
 	}
+
 	/*
 	 * 配置前置通知,使用在方法aspect()上注册的切入点 同时接受JoinPoint切入点对象,可以没有该参数
 	 */
-	@Before("aspect()") //按声明的先后顺序执行
+	@Before("aspect()")
+	// 按声明的先后顺序执行
 	// @Before，前置通知，放在方法头上。
 	public void before2(JoinPoint joinPoint) {
 		if (logger.isInfoEnabled()) {
@@ -77,7 +80,7 @@ public class DemoAspect {
 	}
 
 	// 配置后置通知,使用在方法aspect()上注册的切入点
-	@After("aspect()&&args(id,..)")
+	@After("aspect() && args(id,..)")
 	// 只拦截第一个参数包含long参数的方法，并将该参数赋值给当前id，以便于在拦截方法中使用 @After，后置【finally】通知，放在方法头上。
 	public void after(JoinPoint joinPoint, long id) {
 		if (logger.isInfoEnabled()) {
@@ -96,8 +99,7 @@ public class DemoAspect {
 
 			Signature signature = joinPoint.getSignature();
 			logger.debug("DeclaringType:" + signature.getDeclaringType());
-			logger.debug("DeclaringTypeName:"
-					+ signature.getDeclaringTypeName());
+			logger.debug("DeclaringTypeName:" + signature.getDeclaringTypeName());
 			logger.debug("Modifiers:" + signature.getModifiers());
 			logger.debug("Name:" + signature.getName());
 			logger.debug("LongString:" + signature.toLongString());
@@ -118,14 +120,12 @@ public class DemoAspect {
 			object = ((ProceedingJoinPoint) joinPoint).proceed();
 			long end = System.currentTimeMillis();
 			if (logger.isInfoEnabled()) {
-				logger.info("DemoAspect around " + joinPoint + "\tUse time : "
-						+ (end - start) + " ms!");
+				logger.info("DemoAspect around " + joinPoint + "\tUse time : " + (end - start) + " ms!");
 			}
 		} catch (Throwable e) {
 			long end = System.currentTimeMillis();
 			if (logger.isInfoEnabled()) {
-				logger.info("DemoAspect around " + joinPoint + "\tUse time : "
-						+ (end - start) + " ms with exception : "
+				logger.info("DemoAspect around " + joinPoint + "\tUse time : " + (end - start) + " ms with exception : "
 						+ e.getMessage());
 			}
 		}
@@ -140,7 +140,7 @@ public class DemoAspect {
 		if (logger.isInfoEnabled()) {
 			logger.info("DemoAspect afterReturn " + joinPoint);
 			logger.info("DemoAspect afterReturn Object : " + object);
-			
+
 		}
 
 	}
@@ -151,19 +151,16 @@ public class DemoAspect {
 	// @AfterThrowing，后置【catch】通知，放在方法头上，使用throwing来引用抛出的异常，这里将异常绑定到ex上。
 	public void afterThrow(JoinPoint joinPoint, Exception ex) {
 		if (logger.isInfoEnabled()) {
-			logger.info("DemoAspect afterThrow " + joinPoint + "\t"
-					+ ex.getMessage());
+			logger.info("DemoAspect afterThrow " + joinPoint + "\t" + ex.getMessage());
 		}
 	}
-	
-	
-	
-	/** 
-	* @Fields declareParents : TODO(为web.function.service.DemoService接口的所有实现类织入DemoDeclareParentsServiceImpl实现类的功能)
-	* value：拦截切入点    defaultImpl：默认的实现类  
-	* 声明的对象declareParents是要实现的接口
-	* 使用时可以通过强制类型转换将 DemoService 强制转换成DemoDeclareParentsService
-	*/ 
-	@DeclareParents(value="web.function.service.DemoService+",defaultImpl=DemoDeclareParentsServiceImpl.class)
+
+	/**
+	 * @Fields declareParents : TODO(为web.function.service.
+	 *         DemoService接口的所有实现类织入DemoDeclareParentsServiceImpl实现类的功能)
+	 *         value：拦截切入点 defaultImpl：默认的实现类 声明的对象declareParents是要实现的接口
+	 *         使用时可以通过强制类型转换将 DemoService 强制转换成DemoDeclareParentsService
+	 */
+	@DeclareParents(value = "web.function.service.DemoService+", defaultImpl = DemoDeclareParentsServiceImpl.class)
 	public static DemoDeclareParentsService declareParents;
 }

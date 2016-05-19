@@ -15,27 +15,26 @@ import java.util.List;
 
 import web.function.model.oracle.Demo;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年8月19日 下午2:35:27 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年8月19日 下午2:35:27
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 
 public interface DemoService {
 
 	public List<Demo> findAll();
-	
+
 	public Demo getById(long id);
-	
+
 	public void save(Demo demo);
-	
+
 	public void delete(Demo demo);
-	
-	public Demo getByName(long id,String name);
+
+	public Demo getByName(long id, String name);
 }
-
-

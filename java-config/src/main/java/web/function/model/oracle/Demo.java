@@ -25,47 +25,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.context.annotation.Lazy;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年8月19日 上午11:13:03 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年8月19日 上午11:13:03
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 @Entity
-@Table(name ="TBL_SPRING_DEMO", schema = "BOSS_NQCP")
-@Lazy(value=true)
+@Table(name = "TBL_SPRING_DEMO", schema = "BOSS_NQCP")
+@Lazy(value = true)
 @XmlRootElement
-public class Demo implements java.io.Serializable{
-	
+public class Demo implements java.io.Serializable {
 
-	/** 
-	* @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么) 
-	*/ 
+	/**
+	 * @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+	 */
 	private static final long serialVersionUID = -827759092352842181L;
 
-
 	@Id
-	@Column(name="SP_ID")
+	@Column(name = "SP_ID")
 	@SequenceGenerator(name = "sequenceGenerator", sequenceName = "BOSS_NQCP.SEQ_SPRING_DEMO")
 	@GeneratedValue(generator = "sequenceGenerator", strategy = GenerationType.SEQUENCE)
 	private Long id;
-	
 
-	@Column(name="SP_NAME")
+	@Column(name = "SP_NAME")
 	private String name;
-	
-	
-	@Column(name="SP_AGE")
+
+	@Column(name = "SP_AGE")
 	private Integer age;
-	
-	
-	@Column(name="SP_CREATEDATE")
+
+	@Column(name = "SP_CREATEDATE")
 	private Date createDate;
-	
-	@Column(name="SP_MODIFYDATE")
+
+	@Column(name = "SP_MODIFYDATE")
 	private Date modifyDate;
 
 	@XmlElement
@@ -111,10 +107,5 @@ public class Demo implements java.io.Serializable{
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
-	
-	
-	
+
 }
-
-

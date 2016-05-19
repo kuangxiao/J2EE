@@ -15,17 +15,18 @@ import org.springframework.stereotype.Service;
 
 import web.function.service.DemoDeclareParentsService;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年9月3日 上午10:25:38 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年9月3日 上午10:25:38
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 @Service
-public class DemoDeclareParentsServiceImpl implements DemoDeclareParentsService{
+public class DemoDeclareParentsServiceImpl implements DemoDeclareParentsService {
 
 	@Override
 	public String printString(String mes) {
@@ -34,5 +35,3 @@ public class DemoDeclareParentsServiceImpl implements DemoDeclareParentsService{
 	}
 
 }
-
-

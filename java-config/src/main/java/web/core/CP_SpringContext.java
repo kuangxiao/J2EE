@@ -13,19 +13,20 @@ package web.core;
 
 import org.springframework.context.ApplicationContext;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年8月22日 上午10:35:16 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年8月22日 上午10:35:16
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 public class CP_SpringContext {
-	/** 
-	* @Fields applicationContext : TODO(applicationContext) 
-	*/ 
+	/**
+	 * @Fields applicationContext : TODO(applicationContext)
+	 */
 	private static ApplicationContext applicationContext;
 
 	private static CP_SpringContext springContext;
@@ -48,17 +49,16 @@ public class CP_SpringContext {
 		applicationContext = context;
 	}
 
-	/**                                                          
-	* 描述 : <获得applicationContext中的对象>. <br> 
-	*<p> 
-		<使用方法说明>  
-	 </p>                                                                                                                                                                                                                                                
-	* @param beanName
-	* @return                                                                                                      
-	*/  
+	/**
+	 * 描述 : <获得applicationContext中的对象>. <br>
+	 * <p>
+	 * <使用方法说明>
+	 * </p>
+	 * 
+	 * @param beanName
+	 * @return
+	 */
 	public static Object getBean(String beanName) {
 		return CP_SpringContext.getInstance().getApplicationContext().getBean(beanName);
 	}
 }
-
-

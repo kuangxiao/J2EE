@@ -24,49 +24,45 @@ import org.springframework.web.bind.annotation.RestController;
 import web.function.model.oracle.Demo;
 import web.function.service.DemoService;
 
-/** 
- *Description: <类功能描述>. <br>
- *<p>
-	<使用说明>
- </p>
- *Makedate:2014年9月1日 下午3:28:10 
- * @author Administrator  
- * @version V1.0                             
+/**
+ * Description: <类功能描述>. <br>
+ * <p>
+ * <使用说明>
+ * </p>
+ * Makedate:2014年9月1日 下午3:28:10
+ * 
+ * @author Administrator
+ * @version V1.0
  */
 @RestController
 @RequestMapping("/demorest")
 public class DemoRestController {
 
-	private static final Logger logger = Logger
-			.getLogger(DemoController.class);
-	
-	@Resource(name="demoService")
+	private static final Logger logger = Logger.getLogger(DemoController.class);
+
+	@Resource(name = "demoService")
 	private DemoService demoService;
-	
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 	public Demo findById(@PathVariable("id") Long id) {
 		logger.info("DemoRestController findById id==" + id);
 		return demoService.getById(1L);
 	}
-	
-	
-	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8",MediaType.APPLICATION_XML_VALUE + ";charset=UTF-8"})
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = {
+			MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8", MediaType.APPLICATION_XML_VALUE + ";charset=UTF-8" })
 	public Demo save(@RequestBody Demo demo) {
 		// update by id
 		demoService.save(demo);
 		return demo;
 	}
-	
-	@RequestMapping(value = "/savexml", method = RequestMethod.POST, produces = {MediaType.APPLICATION_XML_VALUE + ";charset=UTF-8"})
+
+	@RequestMapping(value = "/savexml", method = RequestMethod.POST, produces = { MediaType.APPLICATION_XML_VALUE
+			+ ";charset=UTF-8" })
 	public Demo saveXml(@RequestBody Demo demo) {
 		// update by id
 		demoService.save(demo);
 		return demo;
 	}
-	
-	
-	
+
 }
-
-

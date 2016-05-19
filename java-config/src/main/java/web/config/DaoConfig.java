@@ -39,36 +39,34 @@ import web.dao.hibernate.impl.CP_Hibernate4DAOImpl;
  * @version V1.0
  */
 @Configuration
-//启用注解事务管理，使用CGLib代理
+// 启用注解事务管理，使用CGLib代理
 @EnableTransactionManagement(proxyTargetClass = true)
-@Import({DataSourceConfig.class})
+@Import({ DataSourceConfig.class })
 public class DaoConfig {
 
 	private static final Logger logger = Logger.getLogger(DaoConfig.class);
 
-	
 	@Value("${hibernate.dialect}")
 	String hibernate_dialect;
 	@Value("${hibernate.show_sql}")
 	String hibernate_show_sql;
-	
-	/**                                                          
-	* 描述 : <负责解析资源文件>. <br> 
-	*<p> 
-		<这个类必须有，而且必须声明为static，否则不能正常解析>  
-	 </p>                                                                                                                                                                                                                                                
-	* @return                                                                                                      
-	*/  
-	@Bean
-    public static PropertySourcesPlaceholderConfigurer placehodlerConfigurer() {
-		logger.info("PropertySourcesPlaceholderConfigurer");
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-	
-	@Resource(name="dataSource")
-	public DataSource dataSource;
 
-	
+	/**
+	 * 描述 : <负责解析资源文件>. <br>
+	 * <p>
+	 * <这个类必须有，而且必须声明为static，否则不能正常解析>
+	 * </p>
+	 * 
+	 * @return
+	 */
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer placehodlerConfigurer() {
+		logger.info("PropertySourcesPlaceholderConfigurer");
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+
+	@Resource(name = "dataSource")
+	public DataSource dataSource;
 
 	@Bean(name = "sessionFactory")
 	public LocalSessionFactoryBean localSessionFactoryBean() {
@@ -80,10 +78,8 @@ public class DaoConfig {
 
 		Properties hibernateProperties = new Properties();
 		hibernateProperties.setProperty("hibernate.dialect", hibernate_dialect);
-		hibernateProperties.setProperty("hibernate.show_sql",
-				hibernate_show_sql);
-		hibernateProperties.setProperty(
-				"hibernate.current_session_context_class",
+		hibernateProperties.setProperty("hibernate.show_sql", hibernate_show_sql);
+		hibernateProperties.setProperty("hibernate.current_session_context_class",
 				"org.springframework.orm.hibernate4.SpringSessionContext");
 		sessionFactory.setHibernateProperties(hibernateProperties);
 
@@ -103,8 +99,7 @@ public class DaoConfig {
 	public HibernateTransactionManager hibernateTransactionManager() {
 		logger.info("transactionManager");
 		HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
-		hibernateTransactionManager.setSessionFactory(localSessionFactoryBean()
-				.getObject());
+		hibernateTransactionManager.setSessionFactory(localSessionFactoryBean().getObject());
 		return hibernateTransactionManager;
 	}
 }

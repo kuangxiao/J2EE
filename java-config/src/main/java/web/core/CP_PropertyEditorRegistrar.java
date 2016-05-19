@@ -32,8 +32,7 @@ import org.springframework.web.context.request.WebRequest;
  * @author Administrator
  * @version V1.0
  */
-public class CP_PropertyEditorRegistrar implements PropertyEditorRegistrar,
-		WebBindingInitializer {
+public class CP_PropertyEditorRegistrar implements PropertyEditorRegistrar, WebBindingInitializer {
 
 	/**
 	 * @Fields format : TODO(日期类型格式,默认格式：yyyy-MM-dd)
@@ -50,11 +49,9 @@ public class CP_PropertyEditorRegistrar implements PropertyEditorRegistrar,
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		dateFormat.setLenient(false);
 		// 1.将string类型的日期字符串初始化为date类型;
-		registry.registerCustomEditor(Date.class, new CustomDateEditor(
-				dateFormat, false));
+		registry.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 		// 2.去除参数两边的空格;
-		registry.registerCustomEditor(String.class, new StringTrimmerEditor(
-				false));
+		registry.registerCustomEditor(String.class, new StringTrimmerEditor(false));
 	}
 
 	@Override
@@ -63,11 +60,9 @@ public class CP_PropertyEditorRegistrar implements PropertyEditorRegistrar,
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		dateFormat.setLenient(false);
 		// 1.将string类型的日期字符串初始化为date类型;
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(
-				dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 		// 2.去除参数两边的空格;
-		binder.registerCustomEditor(String.class,
-				new StringTrimmerEditor(false));
+		binder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
 	}
 
 	public String getFormat() {

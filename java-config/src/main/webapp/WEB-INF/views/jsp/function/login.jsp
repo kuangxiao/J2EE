@@ -15,21 +15,17 @@
 		<div class="main">
 			<div class="login">
 				<ul>
-					<li><span>UserName:</span> <input type="text"
-						name="j_username" id="j_username" /></li>
-					<li><span>Passwd:</span> <input type="password"
-						name="j_password" id="j_password" /></li>
-					<li><span>remember-me:</span> <input type="checkbox"
-						name="remember-me" id="remember-me" /></li>
-
+					<li><span>UserName:</span> <input type="text" name="j_username" id="j_username" /></li>
+					<li><span>Passwd:</span> <input type="password" name="j_password" id="j_password" /></li>
+					<li><span>remember-me:</span> <input type="checkbox" name="remember-me" id="remember-me" /></li>
 				</ul>
-
 
 				<div class="botton">
 					<input name="" type="button" class="denglu" value="submit"
 						onclick="validate()" /><input name="" type="button"
 						class="quxiao" value="cancle" onclick="window.location.reload()" />
 				</div>
+				
 			</div>
 		</div>
 	</form>
