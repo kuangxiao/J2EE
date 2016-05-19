@@ -32,11 +32,11 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @version V1.0
  */
 public class CP_InitializingInterceptor extends HandlerInterceptorAdapter {
+	
 	Logger logger = Logger.getLogger(CP_InitializingInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		// TODO Auto-generated method stub
 		// log追加：用户名 - sessionID - IP - URL - 请求参数
 		StringBuffer log = new StringBuffer();
 		log.append(" - ").append(request.getSession().getId());
@@ -72,27 +72,23 @@ public class CP_InitializingInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-			throws Exception {
-		// TODO Auto-generated method stub
+			throws Exception {		
 		request.setAttribute("_contextPath", request.getContextPath());
 		String serverName = "http://" + request.getServerName();
 		String serverPort = ":" + request.getServerPort();
 		String httpPath = serverName + serverPort;
 		request.setAttribute("_serverPath", httpPath);
-
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		// TODO Auto-generated method stub
 		super.afterCompletion(request, response, handler, ex);
 	}
 
 	@Override
 	public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		// TODO Auto-generated method stub
+			throws Exception {		
 		super.afterConcurrentHandlingStarted(request, response, handler);
 	}
 
