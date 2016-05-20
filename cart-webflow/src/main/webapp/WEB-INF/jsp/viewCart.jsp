@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>View Cart</title>
 </head>
-<body>
+  <body>
 	<h1>View Cart</h1>
 	<h2>Items in Your Cart</h2>
 	<c:choose>
@@ -54,5 +54,5 @@
 		</c:forEach>
 	</table>
 	
-</body>
+  </body>
 </html>
