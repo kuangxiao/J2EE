@@ -4,7 +4,7 @@
 	http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
 
 	<!-- 在 shopping flow 开始时必须分配一个 Cart 对象，由于要调用 subflow ， 这个 Cart 对象应存放于 conversationScope 中。 同时要添加一个 subflow-state 用于执行添加商品到购物车的任务。 -->
-	<!-- mycart为一个服务类 -->
+	<!-- mycart 为一个服务类 -->
 	<var name="mycart" class="samples.webflow.Cart" />
 	<on-start>
 		<set name="conversationScope.cart" value="mycart"></set>
@@ -30,8 +30,7 @@
 	</view-state>
 
 	<view-state id="orderConfirmed" view="orderConfirmed">
-		<transition on="returnToIndex" to="returnToIndex">
-		</transition>
+		<transition on="returnToIndex" to="returnToIndex" />
 	</view-state>
 
 	<end-state id="returnToIndex" view="externalRedirect:servletRelative:/index.jsp"></end-state>
