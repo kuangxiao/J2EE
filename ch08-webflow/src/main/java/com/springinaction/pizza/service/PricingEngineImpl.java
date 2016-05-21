@@ -12,17 +12,17 @@ import com.springinaction.pizza.domain.PizzaSize;
 
 @SuppressWarnings("serial")
 public class PricingEngineImpl implements PricingEngine, Serializable {
+	
 	private static final Logger LOGGER = Logger.getLogger(PricingEngineImpl.class);
+	private static float PRICE_PER_TOPPING = 0.20f;
 
-	private static Map<PizzaSize, Float> SIZE_PRICES;
-	static {
-		SIZE_PRICES = new HashMap<PizzaSize, Float>();
+	private static Map<PizzaSize, Float> SIZE_PRICES = new HashMap<PizzaSize, Float>();
+	static {		
 		SIZE_PRICES.put(PizzaSize.SMALL, 6.99f);
 		SIZE_PRICES.put(PizzaSize.MEDIUM, 7.99f);
 		SIZE_PRICES.put(PizzaSize.LARGE, 8.99f);
 		SIZE_PRICES.put(PizzaSize.GINORMOUS, 9.99f);
-	}
-	private static float PRICE_PER_TOPPING = 0.20f;
+	}	
 
 	public PricingEngineImpl() {
 	}

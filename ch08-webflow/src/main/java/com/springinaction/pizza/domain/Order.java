@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+
+import com.springinaction.pizza.service.PricingEngine;
 
 @Configurable("order")
 public class Order implements Serializable {
@@ -41,7 +44,7 @@ public class Order implements Serializable {
 	}
 
 	public float getTotal() {
-		return 0.0f;// pricingEngine.calculateOrderTotal(this);
+		return pricingEngine.calculateOrderTotal(this);
 	}
 
 	public Payment getPayment() {
@@ -52,9 +55,11 @@ public class Order implements Serializable {
 		this.payment = payment;
 	}
 
-	// // injected
-	// private PricingEngine pricingEngine;
-	// public void setPricingEngine(PricingEngine pricingEngine) {
-	// this.pricingEngine = pricingEngine;
-	// }
+	// injected through property
+	private PricingEngine pricingEngine;
+	
+	@Autowired
+	public void setPricingEngine(PricingEngine pricingEngine) {
+		this.pricingEngine = pricingEngine;
+	}
 }
