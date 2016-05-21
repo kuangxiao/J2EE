@@ -4,7 +4,7 @@
   http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
 	<var name="order" class="com.springinaction.pizza.domain.Order" />
-
+	
 	<!-- Customer -->
 	<subflow-state id="customer" subflow="pizza/customer">
 		<input name="order" value="order" />
@@ -38,5 +38,5 @@
 	<global-transitions>
 		<transition on="cancel" to="endState" />
 	</global-transitions>
-	
+
 </flow>

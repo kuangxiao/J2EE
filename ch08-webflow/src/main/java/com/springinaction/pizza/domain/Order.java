@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
@@ -13,6 +14,7 @@ import com.springinaction.pizza.service.PricingEngine;
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(Order.class);
 
 	private Customer customer;
 	private List<Pizza> pizzas;
@@ -44,6 +46,7 @@ public class Order implements Serializable {
 	}
 
 	public float getTotal() {
+		LOGGER.info("in getTotal():"+pricingEngine);
 		return pricingEngine.calculateOrderTotal(this);
 	}
 
@@ -56,8 +59,8 @@ public class Order implements Serializable {
 	}
 
 	// injected through property
-	private PricingEngine pricingEngine;
-	
+	PricingEngine pricingEngine;
+
 	@Autowired
 	public void setPricingEngine(PricingEngine pricingEngine) {
 		this.pricingEngine = pricingEngine;
