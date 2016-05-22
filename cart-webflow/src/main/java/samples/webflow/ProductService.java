@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service("productService")
 public class ProductService {
+	
 	/* products 用于存放多个商品 */
 	private Map<Integer, Product> products = new HashMap<Integer, Product>();
 

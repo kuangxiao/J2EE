@@ -49,7 +49,7 @@
 			<tr>
 				<td>${product.description}</td>
 				<td>${product.price}</td>
-				<td><a href="${flowExecutionUrl}&_eventId=addToCart&productId=${product.id}">[add to cart]</a> </td>
+				<td><a href="${flowExecutionUrl}&_eventId_addToCart&productId=${product.id}">[add to cart]</a> </td>
 			</tr>
 		</c:forEach>
 	</table>
