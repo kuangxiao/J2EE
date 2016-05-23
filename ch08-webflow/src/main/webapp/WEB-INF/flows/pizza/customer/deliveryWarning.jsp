@@ -10,7 +10,7 @@
 	<p>The address is outside of our delivery area. The order may still
 		be taken for carry-out.</p>
 
-	<a href="${flowExecutionUrl}&_eventId=accept">Accept</a> |
+	<a href="${flowExecutionUrl}&_eventId_accept">Accept</a> |
 	<a href="${flowExecutionUrl}&_eventId=cancel">Cancel</a>
 </body>
 </html>
