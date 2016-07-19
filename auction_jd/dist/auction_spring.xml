@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC
+          "-//SPRING//DTD BEAN//EN"
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="auction" class="com.silence.jd.auction.biz.JDAuction">
+		<property name="paimaiId">
+			<value>${paimaiId}</value>
+		</property>
+		<property name="maxPrice">
+			<value>${maxPrice}</value>
+		</property>
+		<property name="incrementPerTime">
+			<value>${incrementPerTime}</value>
+		</property>
+		<property name="aheadTime">
+			<value>${aheadTime}</value>
+		</property>
+		<property name="cookie">
+			<value>${cookie}</value>
+		</property>
+	</bean>
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="auction.properties" />
+	</bean>
+
+</beans>
+
