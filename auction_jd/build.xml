@@ -1,0 +1,94 @@
+<?xml version = "1.0"  ?>
+
+<project name="JDAction" default="package" basedir=".">
+ <property file="build.properties" />
+
+ <property name="src.home" value='${basedir}/src' />
+ <property name="build.home" value='${basedir}/WebContent' />
+ <property name="conf.home" value='${basedir}/config' />
+ <property name="dist.home" value='${basedir}/dist' />
+
+ <path id="compile.classpath">
+  <fileset dir="./lib">
+   <include name="*.jar" />
+  </fileset>
+ </path>
+
+ <!-- compile the project -->
+ <target name="compile" description="Compile Java sources">
+  <mkdir dir="${build.home}/WEB-INF/classes" />
+
+  <javac srcdir="${src.home}" destdir="${build.home}/WEB-INF/classes" source="1.5" target="1.5" debug="true" deprecation="false" optimize="true">
+   <classpath refid="compile.classpath" />
+  </javac>
+
+  <copy todir="${build.home}/WEB-INF/classes">  
+   <fileset dir="${conf.home}" includes="log*.properties" />
+   <fileset dir="${src.home}"  includes="**/*.xml" />
+  </copy>
+ </target>
+ 
+ <target name= "package" depends= "compile" description= "Generate JAR file" >
+    <mkdir dir="${dist.home}" />
+        <tstamp>
+            <format property= "build.date" pattern= "EEEE, d MMMM yyyy" />
+            <format property= "build.time" pattern= "hh:mm a" />
+        </tstamp>
+        <jar destfile= "${dist.home}/jd_auction.jar" 
+		     basedir= "${build.home}/WEB-INF/classes" >			 
+            <manifest>
+                <attribute name= "Built-By" value= "Silence" />
+                <attribute name= "Main-Class" value= "com.silence.jd.auction.biz.AuctionManager" />                
+                <attribute name= "Specification-Vendor" value= "ACME Incorporated" />
+                <attribute name= "Implementation-Title" value= "common" />  
+                <attribute name="Class-Path" value="lib/spring.jar lib/quartz-all-1.6.0.jar lib/httpunit.jar lib/commons-logging-1.0.4.jar lib/commons-collections-3.2.jar lib/jta.jar lib/js.jar lib/Tidy.jar lib/log4j-1.2.14.jar"/>
+				
+            </manifest>
+			<!-- 
+			<fileset dir="./lib">
+               <include name="*.jar" />
+            </fileset>  
+			-->
+
+        </jar>
+    </target>
+	
+
+ <!-- deploy the project to tomcat webapps folder -->
+ <target name="deploy" depends="compile" description="Deploy the project">
+  <mkdir dir="${deploy.localhost}/${app.name}" />
+
+  <copy todir="${deploy.localhost}/${app.name}">
+   <fileset dir="${build.home}" includes="**/*.*" />
+  </copy>
+ </target>
+ 
+     
+
+ <!-- start tomcat using ant command -->
+ <target name="tomcat.start">
+  <java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+   <jvmarg value="-Dcatalina.home=${tomcat.home}" />
+  </java>
+ </target>
+
+ <!-- stop tomcat using ant command -->
+ <target name="tomcat.stop">
+  <java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+   <jvmarg value="-Dcatalina.home=${tomcat.home}" />
+   <arg line="stop" />
+  </java>
+ </target>
+
+ <!-- using tomcat command to start tomcat and can debug the project -->
+ <target name="tomcat.debug">
+  <java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+   <jvmarg value="-Dcatalina.home=${tomcat.home}" />
+   <jvmarg value="-Xdebug" />
+   <jvmarg value="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n" />
+  </java>
+ </target>
+ 
+</project>
+
+

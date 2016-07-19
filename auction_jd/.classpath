@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="config"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-validator.jar"/>
+	<classpathentry kind="lib" path="lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/httpunit.jar"/>
+	<classpathentry kind="lib" path="lib/js.jar"/>
+	<classpathentry kind="lib" path="lib/json-lib-2.1-jdk15.jar"/>
+	<classpathentry kind="lib" path="lib/jta.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/quartz-all-1.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-support.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jdbc.jar"/>
+	<classpathentry kind="lib" path="lib/spring-jms.jar"/>
+	<classpathentry kind="lib" path="lib/spring-orm.jar"/>
+	<classpathentry kind="lib" path="lib/spring-tx.jar"/>
+	<classpathentry kind="lib" path="lib/spring.jar"/>
+	<classpathentry kind="lib" path="lib/Tidy.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
