@@ -247,8 +247,8 @@ public class JDAuction {
 
 			loginReq.setParameter("chkRememberUsername", "on");
 			loginReq.setParameter("loginname", AuctionConstant.LOGIN_NAME);
-			loginReq.setParameter("nloginpwd", AuctionConstant.LOGIN_PWD + "05");
-			loginReq.setParameter("loginpwd", AuctionConstant.LOGIN_PWD + "05");
+			loginReq.setParameter("nloginpwd", AuctionConstant.LOGIN_PWD);
+			loginReq.setParameter("loginpwd", AuctionConstant.LOGIN_PWD);
 			loginReq.setParameter("chkRememberMe", "on");
 			loginReq.setParameter("authcode", "");
 
