@@ -73,8 +73,8 @@ public class JDAuction {
 	 * @return
 	 */
 	public int queryAuctionInfo() {
-
-		log.info("---------- in queryAuctionInfo() XHR get ----------");
+		
+		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in queryAuctionInfo() XHR get ---");
 
 		// http://dbditem.jd.com/json/current/englishquery?paimaiId=12863687&skuId=0&t=265688&start=0&end=9
 		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=9";
@@ -97,7 +97,7 @@ public class JDAuction {
 			if (currentPrice > this.getMaxPrice()) {
 				isExceededMaxPrice = true;
 			}
-			log.info("*** queryAuctionInfo(): currentPrice = " + currentPrice + ", auctionStatus=" + auctionStatus
+			log.info("*** in queryAuctionInfo(): currentPrice = " + currentPrice + ", auctionStatus=" + auctionStatus
 					+ ", remainTime=" + remainTime + "(" + timeBetweenText(remainTime) + "), stockNum=" + stockNum);
 
 			return currentPrice;
@@ -117,8 +117,8 @@ public class JDAuction {
 	 * @return
 	 */
 	public boolean increPrice() {
-
-		log.info("---------- in increPrice() XHR get ----------");
+		
+		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in increPrice() XHR get ---");
 
 		boolean result = false;
 		int responseCode = 0;
@@ -152,7 +152,7 @@ public class JDAuction {
 			e.printStackTrace();
 		}
 
-		log.info("*** increPrice(): result=" + result + ", myPrice == newPrice(" + newPrice + ")" + ", responseCode==>"
+		log.info("*** in increPrice(): result=" + result + ", myPrice == newPrice(" + newPrice + ")" + ", responseCode==>"
 				+ responseCode);
 
 		return result;
@@ -176,7 +176,8 @@ public class JDAuction {
 	 * 注意：auctionStatus==0可能已经开始了！
 	 */
 	public void bid() {
-		log.info("---------- in bid()  ----------");
+	
+		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in bid() ---");
 
 		while (auctionStatus == 1 && !isExceededMaxPrice) {
 

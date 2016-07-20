@@ -35,7 +35,7 @@ public class AuctionManager implements Runnable {
 	}
 	
 	public void initAuction(){
-		log.info("---------- in initAuction()  ----------");
+		log.info(jda.getPaimaiId()+"["+jda.getMaxPrice()+"]"+"--- in initAuction()  ---");
 		
 		jda.queryAuctionInfo();	
 		scheduler.schedule( am,jda.remainTime-jda.getAheadTime(), TimeUnit.MILLISECONDS);				
@@ -43,7 +43,7 @@ public class AuctionManager implements Runnable {
 	
 
 	public void run() {	
-		log.info("---------- in run()  ----------");
+		log.info(jda.getPaimaiId()+"["+jda.getMaxPrice()+"]"+"--- in run()  ---");
 		
 		jda.bid();
 //		System.exit(0);
