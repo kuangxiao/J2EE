@@ -52,11 +52,11 @@ public class JDAuction {
 						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36");
 	}
 
-	public int currentPrice = 0;
-	public int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
-	public long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
-	public int stockNum = 0;// 库存
-	public int myPrice = 0;
+	public transient int currentPrice = 0;
+	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
+	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
+	public transient int myPrice = 0;
+	public transient int stockNum = 0;// 库存	
 
 	/**
 	 * 设置 Cookie
@@ -77,7 +77,7 @@ public class JDAuction {
 		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in queryAuctionInfo() XHR get ---");
 
 		// http://dbditem.jd.com/json/current/englishquery?paimaiId=12863687&skuId=0&t=265688&start=0&end=9
-		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=9";
+		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=4";
 
 		WebRequest bidRecordReq = new GetMethodWebRequest(AuctionConstant.URL_BID_RECORDS + urlParams);
 		bidRecordReq.setHeaderField("Host", "dbditem.jd.com");
