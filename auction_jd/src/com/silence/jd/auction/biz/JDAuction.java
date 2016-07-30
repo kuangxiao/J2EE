@@ -53,10 +53,10 @@ public class JDAuction {
 	}
 
 	public transient int currentPrice = 0;
-	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
-	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
+	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；	
 	public transient int myPrice = 0;
 	public transient int stockNum = 0;// 库存	
+	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
 
 	/**
 	 * 设置 Cookie
@@ -73,8 +73,7 @@ public class JDAuction {
 	 * @return
 	 */
 	public int queryAuctionInfo() {
-		
-		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in queryAuctionInfo() XHR get ---");
+		log.info("--- in queryAuctionInfo("+getPaimaiId()+"["+getMaxPrice()+"]"+") XHR get ---");		
 
 		// http://dbditem.jd.com/json/current/englishquery?paimaiId=12863687&skuId=0&t=265688&start=0&end=9
 		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=4";
@@ -117,8 +116,7 @@ public class JDAuction {
 	 * @return
 	 */
 	public boolean increPrice() {
-		
-		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in increPrice() XHR get ---");
+		log.info("--- in increPrice("+getPaimaiId()+"["+getMaxPrice()+"]"+") XHR get ---");		
 
 		boolean result = false;
 		int responseCode = 0;
@@ -175,9 +173,8 @@ public class JDAuction {
 	 * 不断地出价 有没结束可以通过 1- 时间比较判断；2-状态（auctionStatus==2）判断。
 	 * 注意：auctionStatus==0可能已经开始了！
 	 */
-	public void bid() {
-	
-		log.info(getPaimaiId()+"["+getMaxPrice()+"]"+"--- in bid() ---");
+	public void bid() {	
+		log.info("--- in bid("+getPaimaiId()+"["+getMaxPrice()+"]"+") ---");
 
 		while (auctionStatus == 1 && !isExceededMaxPrice) {
 
@@ -225,7 +222,6 @@ public class JDAuction {
 	 * @date 2016年7月18日 下午1:55:19
 	 */
 	public Long login(String _t) {
-
 		log.info("---------- in login() post ----------");
 
 		Long loginTime = null;
@@ -330,7 +326,6 @@ public class JDAuction {
 	 * 关机。
 	 */
 	public static void shutdown() {
-
 		log.info("---------- in Shutdown() ----------");
 
 		String osName = System.getProperty("os.name");
