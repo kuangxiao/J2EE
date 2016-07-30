@@ -1,5 +1,8 @@
 package com.silence.jd.auction.biz;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -55,6 +58,13 @@ public class AuctionManager {
 			// 已经结束				
 		default:
 			log.info("*** in initAuction(): bid over! ***");
+			System.out.println("press enter to exit >>>");
+			try {
+				new BufferedReader(new InputStreamReader(System.in)).readLine();
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
+			System.exit(0);  
 			break;			
 		}		
 	}
