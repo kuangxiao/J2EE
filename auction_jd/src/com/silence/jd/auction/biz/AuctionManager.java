@@ -44,6 +44,7 @@ public class AuctionManager {
 					initAuction();
 				}				
 			}, jda.remainTime + 59000L, TimeUnit.MILLISECONDS);
+			log.info("*** in initAuction(): after "+JDAuction.timeBetweenText(jda.remainTime + 59000L)+" init again ***");
 			break;
 		case 1:
 			// 进行中
@@ -53,6 +54,7 @@ public class AuctionManager {
 					jda.bid();
 				}				
 			}, jda.remainTime - jda.getAheadTime(), TimeUnit.MILLISECONDS);
+			log.info("*** in initAuction(): after "+JDAuction.timeBetweenText(jda.remainTime + 59000L)+" bid() ***");
 			break;
 		case 2:
 			// 已经结束				
