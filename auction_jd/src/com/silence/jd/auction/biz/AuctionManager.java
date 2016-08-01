@@ -15,10 +15,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class AuctionManager {
 
 	protected static Log log = LogFactory.getLog(AuctionManager.class);
-	
+
 	final static int THREAD_POOL_SIZE = 2;
-	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);		
-	static JDAuction jda = null;	
+	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
+	static JDAuction jda = null;
 
 	public static void main(String[] args) {
 
@@ -32,43 +32,44 @@ public class AuctionManager {
 	}
 
 	public static void initAuction() {
-		log.info("--- in initAuction("+jda.getPaimaiId()+"["+jda.getMaxPrice()+"]"+") ---");		
+		log.info("--- in initAuction(" + jda.getPaimaiId() + "[" + jda.getMaxPrice() + "]" + ") ---");
 
 		jda.queryAuctionInfo();
 		switch (jda.auctionStatus) {
 		case 0:
-			// 尚未开始		
-			scheduler.schedule(new Runnable(){
+			// 尚未开始
+			scheduler.schedule(new Runnable() {
 				@Override
 				public void run() {
 					initAuction();
-				}				
+				}
 			}, jda.remainTime + 59000L, TimeUnit.MILLISECONDS);
-			log.info("*** in initAuction(): after "+JDAuction.timeBetweenText(jda.remainTime + 59000L)+" init again ***");
+			log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime + 59000L) + " init again ***");
 			break;
 		case 1:
 			// 进行中
-			scheduler.schedule(new Runnable(){
+			scheduler.schedule(new Runnable() {
 				@Override
 				public void run() {
 					jda.bid();
-				}				
+				}
 			}, jda.remainTime - jda.getAheadTime(), TimeUnit.MILLISECONDS);
-			log.info("*** in initAuction(): after "+JDAuction.timeBetweenText(jda.remainTime + 59000L)+" bid() ***");
+			log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime - jda.getAheadTime())
+					+ " bid() ***");
 			break;
 		case 2:
-			// 已经结束				
+			// 已经结束
 		default:
 			log.info("*** in initAuction(): bid over! ***");
 			System.out.println("press enter to exit >>>");
 			try {
 				new BufferedReader(new InputStreamReader(System.in)).readLine();
-			} catch (IOException e) {				
-				e.printStackTrace();
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
 			}
-			System.exit(0);  
-			break;			
-		}		
+			System.exit(0);
+			break;
+		}
 	}
-	
+
 }
