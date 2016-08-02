@@ -33,6 +33,13 @@ public class JDAuction {
 	public static Long lastLoginTime = null;
 	public static boolean isMyPrice = false;
 	public static boolean isExceededMaxPrice = false;
+
+	public transient int currentPrice = 0;
+	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
+	public transient int myPrice = 0;
+	public transient int stockNum = 0;// 库存
+	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
+
 	private String uuid = "a7d68c97-06fe-41c2-a922-a166adfb4960"; // UUID.randomUUID().toString();
 
 	/**
@@ -47,16 +54,9 @@ public class JDAuction {
 		conversation.setHeaderField("Connection", "Keep-Alive");
 		conversation.setHeaderField("Pragma", "	no-cache");
 		conversation.setHeaderField("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		conversation
-				.setHeaderField("User-Agent",
+		conversation.setHeaderField("User-Agent",
 						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36");
 	}
-
-	public transient int currentPrice = 0;
-	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
-	public transient int myPrice = 0;
-	public transient int stockNum = 0;// 库存
-	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
 
 	/**
 	 * 设置 Cookie
@@ -152,20 +152,7 @@ public class JDAuction {
 				+ responseCode);
 
 		return result;
-	}
-
-	public int getNewPrice() {
-		int inc = new Random().nextInt(getIncrementPerTime());
-		if (inc < 1) {
-			inc = 1;
-		}
-
-		return currentPrice + inc;
-	}
-
-	public boolean isMyPrice() {
-		return currentPrice <= myPrice;
-	}
+	}	
 
 	/**
 	 * 不断地出价 有没结束可以通过 1- 时间比较判断；2-状态（auctionStatus==2）判断。
@@ -175,13 +162,11 @@ public class JDAuction {
 		log.info("--- in bid(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
 
 		while (auctionStatus == 1 && !isExceededMaxPrice) {
-
 			increPriceAsync();
-
 			try {
 				Thread.sleep(AuctionConstant.BIDDING_SLEEP_TIME);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.error(e.getMessage(), e);
 			}
 		}
 
@@ -207,6 +192,19 @@ public class JDAuction {
 			}
 
 		}).start();
+	}
+	
+	public int getNewPrice() {
+		int inc = new Random().nextInt(getIncrementPerTime());
+		if (inc < 1) {
+			inc = 1;
+		}
+
+		return currentPrice + inc;
+	}
+
+	public boolean isMyPrice() {
+		return currentPrice <= myPrice;
 	}
 
 	/**

@@ -60,7 +60,8 @@ public class AuctionManager {
 		case 2:
 			// 已经结束
 		default:
-			log.info("*** in initAuction(): bid over! ***");
+			log.info("*** in initAuction(): bid over! shutdown scheduler ***");
+			scheduler.shutdown();
 			System.out.println("press enter to exit >>>");
 			try {
 				new BufferedReader(new InputStreamReader(System.in)).readLine();
