@@ -17,7 +17,7 @@ public class AuctionManager {
 	protected static Log log = LogFactory.getLog(AuctionManager.class);
 
 	final static int THREAD_POOL_SIZE = 5;
-	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
+	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);	
 	static JDAuction jda = null;
 
 	public static void main(String[] args) {
@@ -27,7 +27,7 @@ public class AuctionManager {
 		jda = (JDAuction) context.getBean("auction");
 		initAuction();
 		if (args.length > 0 && "test".equalsIgnoreCase(args[0])) {
-			jda.increPriceAsync();
+			jda.bidOnce();
 		}
 	}
 
@@ -43,11 +43,13 @@ public class AuctionManager {
 				public void run() {
 					initAuction();
 				}
-			}, jda.remainTime + 59000L, TimeUnit.MILLISECONDS);
+			}, jda.remainTime + 99000L, TimeUnit.MILLISECONDS);
 			log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime + 59000L) + " init again ***");
 			break;
+			
 		case 1:
 			// 进行中
+			AuctionConstant.BIDDING_DEADLINE = System.currentTimeMillis() + jda.remainTime - AuctionConstant.BIDDING_RETENTION_TIME;
 			scheduler.schedule(new Runnable() {
 				@Override
 				public void run() {
