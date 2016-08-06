@@ -20,8 +20,12 @@ public class AuctionConstant {
 	public static final String LOGIN_NAME = "test";
 	public static final String LOGIN_PWD = "test";
 
-	// 投标主线程休眠间隔
-	public static long BIDDING_SLEEP_TIME = 98L;
+	// 获取价格主线程休眠间隔	
+	public static long QUERRING_SLEEP_TIME = 48L;
+	// 投标主线程休眠间隔	
+	public static long BIDDING_SLEEP_TIME = 380L;
+	// 投标剩余时间
+	public static long BIDDING_REMAIN_TIME = 880L;
 
 	// Session有效时长（毫秒）
 	public static long SESSION_TIMEOUT = 20L * 60 * 1000;

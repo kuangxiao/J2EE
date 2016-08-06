@@ -16,7 +16,7 @@ public class AuctionManager {
 
 	protected static Log log = LogFactory.getLog(AuctionManager.class);
 
-	final static int THREAD_POOL_SIZE = 2;
+	final static int THREAD_POOL_SIZE = 5;
 	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
 	static JDAuction jda = null;
 

@@ -2,6 +2,7 @@ package com.silence.jd.auction.biz;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import net.sf.json.JSONObject;
 
@@ -38,7 +39,7 @@ public class JDAuction {
 	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
 	public transient int myPrice = 0;
 	public transient int stockNum = 0;// 库存
-	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
+	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；	
 
 	private String uuid = "a7d68c97-06fe-41c2-a922-a166adfb4960"; // UUID.randomUUID().toString();
 
@@ -159,16 +160,31 @@ public class JDAuction {
 	 * 注意：auctionStatus==0可能已经开始了！
 	 */
 	public void bid() {
-		log.info("--- in bid(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
-
-		while (auctionStatus == 1 && !isExceededMaxPrice) {
-			increPriceAsync();
-			try {
-				Thread.sleep(AuctionConstant.BIDDING_SLEEP_TIME);
-			} catch (InterruptedException e) {
-				log.error(e.getMessage(), e);
+		log.info("--- in bid(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");		
+		
+		// 解耦获取价格任务及出价任务
+		AuctionManager.scheduler.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				if( auctionStatus == 1 && !isExceededMaxPrice ){
+					queryAuctionInfo();// 此方法会阻塞
+				}				
 			}
-		}
+		}, 0L,AuctionConstant.QUERRING_SLEEP_TIME, TimeUnit.MILLISECONDS);
+		
+		AuctionManager.scheduler.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				if (auctionStatus == 1 && !isMyPrice() && !isExceededMaxPrice && remainTime <= AuctionConstant.BIDDING_REMAIN_TIME ) {
+					// 在最后一秒出价，必须确保每次投标的价格有效:禁止连续出价及频繁出价。
+					increPrice();
+				} else {
+					AuctionManager.scheduler.shutdownNow();
+					log.info("*** in increPriceAsync(): give up! auctionStatus=" + auctionStatus + ", isExceededMaxPrice("
+							+ currentPrice + ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());
+				}
+			}
+		}, 0L,AuctionConstant.BIDDING_SLEEP_TIME, TimeUnit.MILLISECONDS);		
 
 		// 拍卖结束
 		log.info("*** in bid(): bid over! auctionStatus=" + auctionStatus + ", isExceededMaxPrice(" + currentPrice + ")="
@@ -180,10 +196,10 @@ public class JDAuction {
 	 */
 	public void increPriceAsync() {
 		new Thread(new Runnable() {
-			public void run() {
-				// 禁止连续出价及频繁出价，必须确保每次投标的价格有效
-				queryAuctionInfo();
-				if (auctionStatus == 1 && !isMyPrice() && !isExceededMaxPrice) {
+			public void run() {				
+				queryAuctionInfo();// 此方法会阻塞				
+				if (auctionStatus == 1 && !isMyPrice() && !isExceededMaxPrice && remainTime <= AuctionConstant.QUERRING_SLEEP_TIME ) {
+					// 在最后一秒出价，必须确保每次投标的价格有效:禁止连续出价及频繁出价。
 					increPrice();
 				} else {
 					log.info("*** in increPriceAsync(): give up! auctionStatus=" + auctionStatus + ", isExceededMaxPrice("
