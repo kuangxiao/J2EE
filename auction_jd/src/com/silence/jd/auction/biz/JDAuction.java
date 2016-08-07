@@ -1,17 +1,14 @@
 package com.silence.jd.auction.biz;
 
-import java.io.IOException;
 import java.util.Random;
 
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.xml.sax.SAXException;
 
 import com.meterware.httpunit.GetMethodWebRequest;
 import com.meterware.httpunit.HttpUnitOptions;
-import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebConversation;
 import com.meterware.httpunit.WebRequest;
 import com.meterware.httpunit.WebResponse;
@@ -123,7 +120,7 @@ public class JDAuction {
 		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&start=0&end=4&_t=" + System.currentTimeMillis()
 				/ 1000 + "&_=" + System.currentTimeMillis() / 1000 + "&callback=jsonp" + jsonpCount;
 
-		WebRequest bidRecordReq = new GetMethodWebRequest(AuctionConstant.URL_M_BID_RECORDS + urlParams);
+		WebRequest bidRecordReq = new GetMethodWebRequest(AuctionConstant.URL_BID_RECORDS_M + urlParams);
 		bidRecordReq.setHeaderField("Accept", "*/*");
 		bidRecordReq.setHeaderField("Accept-Encoding", "gzip, deflate, sdch");
 		bidRecordReq.setHeaderField("Accept-Language", "zh-CN,zh;q=0.8");
@@ -170,22 +167,23 @@ public class JDAuction {
 	}
 
 	/**
-	 * 加价，服务器先判断价格，再判断拍卖时候结束。
+	 * 投标，服务器先判断价格，再判断拍卖时候结束。
 	 * 
 	 * {"message":"出价成功","result":200} {"message":"不能低于当前价","result":561}
 	 * 
 	 * @return
 	 */
-	public boolean increPrice() {
+	public boolean bid() {
+		
 		boolean result = false;
 		int responseCode = 0;
-		int newPrice = getNewPrice();
+		int newPrice = getNewPrice();	
 		// http://dbditem.jd.com/services/bid.action?t=411891&paimaiId=12866823&price=1002&proxyFlag=0&bidSource=0
 		String urlParams = "?t=" + getRamdomNumber() + "&paimaiId=" + getPaimaiId() + "&price=" + newPrice
 				+ "&proxyFlag=0&bidSource=0";
-		log.info("$$$ in increPrice(" + getPaimaiId() + "[MyMax-" + getMaxPrice() + ",newPrice-" + newPrice + "]"
+		log.info("$$$ in bid(" + getPaimaiId() + "[maxPrice-" + getMaxPrice() + ",bidPrice-" + newPrice + "]"
 				+ ") $$$");
-		WebRequest addPriceReq = new GetMethodWebRequest(AuctionConstant.URL_INCRE_PRICE + urlParams);
+		WebRequest addPriceReq = new GetMethodWebRequest(AuctionConstant.URL_BID + urlParams);
 		addPriceReq.setHeaderField("Host", "dbditem.jd.com");
 		addPriceReq.setHeaderField("Connection", "keep-alive");
 		addPriceReq.setHeaderField("Referer", "http://dbditem.jd.com/" + paimaiId);
@@ -215,6 +213,10 @@ public class JDAuction {
 		log.info("*** in increPrice(): result=" + result + ", myPrice == newPrice(" + newPrice + ")"
 				+ ", responseCode==>" + responseCode);
 
+		if( getMode() != 0 ){
+			queryCurrentPrice();
+		}
+		
 		return result;
 	}
 
@@ -240,23 +242,7 @@ public class JDAuction {
 		log.info("*** in queryCurrentPrice(): bid over! auctionStatus=" + auctionStatus + ", isExceededMaxPrice("
 				+ currentPrice + ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());
 
-	}
-
-	public void bid() {
-		log.info("$$$ in bid(" + getPaimaiId() + "[MyMax-" + getMaxPrice() + ",Current-" + currentPrice + "]" + ") $$$");
-
-		if (currentPrice > getMaxPrice()) {
-			// 价格超出心里预期，就使用自己的能接受的最高价
-			currentPrice = getMaxPrice();
-		}
-
-		if (!isMyPrice()) {
-			increPrice();
-		} else {
-			log.info("*** in bid(): give up! auctionStatus=" + auctionStatus + ", isExceededMaxPrice(" + currentPrice
-					+ ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());
-		}
-	}
+	}	
 
 	/**
 	 * 异步获取拍卖的最新信息。
@@ -284,25 +270,17 @@ public class JDAuction {
 			}
 
 		}).start();
-	}
-
-	/**
-	 * 异步出一次价。
-	 */
-	public void increPriceAsync() {
-		new Thread(new Runnable() {
-			public void run() {
-				increPrice();
-			}
-		}).start();
-	}
+	}	
 
 	/**
 	 * 同步出一次价。
 	 */
 	public void bidOnce() {
+		int oldMode = getMode();
+		setMode(0);
 		queryAuctionInfo();// 此方法会阻塞
-		increPrice();
+		bid();
+		setMode(oldMode);
 	}
 
 	public int getNewPrice() {
@@ -310,8 +288,14 @@ public class JDAuction {
 		if (inc < 1) {
 			inc = 1;
 		}
-
-		return currentPrice + inc;
+		if( getMode() == 0 ){
+			if( currentPrice > getMaxPrice()){
+				return getMaxPrice();
+			}
+			return currentPrice + inc;
+		}else{
+			return getMaxPrice();
+		}		
 	}
 
 	public boolean isMyPrice() {
@@ -405,6 +389,11 @@ public class JDAuction {
 	 * 能接受的最大价格
 	 */
 	private int maxPrice = 0;
+	
+	/**
+	 * 秒杀模式，0-使用参考价格；1-使用心里价格秒杀
+	 */
+	private int mode = 0;
 
 	/**
 	 * 每次最少加价 单位 元
@@ -433,6 +422,14 @@ public class JDAuction {
 	public void setMaxPrice(int maxPrice) {
 		this.maxPrice = maxPrice;
 	}
+	
+	public int getMode() {
+		return mode;
+	}
+
+	public void setMode(int mode) {
+		this.mode = mode;
+	}
 
 	public int getIncrementPerTime() {
 		return incrementPerTime;
@@ -456,69 +453,6 @@ public class JDAuction {
 
 	public void setCookie(String cookie) {
 		this.cookie = cookie;
-	}
-
-	private String uuid = "a7d68c97-06fe-41c2-a922-a166adfb4960"; // UUID.randomUUID().toString();
-
-	/**
-	 * TODO:需要设置此Cookie及 请求头部"Referer"才能正确登录。
-	 * 
-	 * @Title login
-	 * @param _t
-	 * @return
-	 * @author 王涛(Silence)
-	 * @date 2016年7月18日 下午1:55:19
-	 */
-	public Long login(String _t) {
-		log.info("---------- in login() post ----------");
-
-		Long loginTime = null;
-		// https://passport.jd.com/uc/loginService?uuid=fc001e14-0cdf-42eb-823a-c5301ce78fb8&&r=0.9680759462401334&version=2015
-		String loginUrlParams = "?uuid=" + uuid + "&r=" + getRamdomNumber() + "&version=2015";
-		WebRequest loginReq = new PostMethodWebRequest(AuctionConstant.URL_LOGIN_SUBMIT + loginUrlParams);
-		loginReq.setHeaderField("Referer", "https://passport.jd.com/uc/login");
-		loginReq.setHeaderField("Cookie", cookie);
-
-		try {
-			loginReq.setParameter("machineNet", "");
-			loginReq.setParameter("machineCpu", "");
-			loginReq.setParameter("machineDisk", "");
-			loginReq.setParameter("eid",
-					"21DE77D31C7BBEF5BA1EB1C3E7E072EEDC3D58637113E31ED4C3AFA9CBBFBE8746867DC2B474EB5D8F1714D9A8B7F022");
-			loginReq.setParameter("fp", "aa07ef3d4f2548726b66170b7adfffde");
-			loginReq.setParameter("_t", "_ntJnQeh");
-			loginReq.setParameter("hPFFVwKsze", "FXaLM");
-
-			loginReq.setParameter("chkRememberUsername", "on");
-			loginReq.setParameter("loginname", AuctionConstant.LOGIN_NAME);
-			loginReq.setParameter("nloginpwd", AuctionConstant.LOGIN_PWD);
-			loginReq.setParameter("loginpwd", AuctionConstant.LOGIN_PWD);
-			loginReq.setParameter("chkRememberMe", "on");
-			loginReq.setParameter("authcode", "");
-
-			webResponse = conversation.getResponse(loginReq);
-			String loginCookie = webResponse.getHeaderField("Set-Cookie");
-			cookie += loginCookie;
-
-			String responseText = webResponse.getText();
-			log.debug("responseText==>" + responseText);
-			if (responseText != null && !"".equals(responseText)) {
-				// 登录失败
-				JSONObject jsonObj = JSONObject.fromObject(responseText.replace("(", "").replace(")", ""));
-				_t = jsonObj.optString("_t", "");
-				login(_t);
-			} else {
-				loginTime = System.currentTimeMillis();
-				lastLoginTime = loginTime;
-				log.info("lastLoginTime==>" + lastLoginTime);
-			}
-
-		} catch (IOException e) {
-			log.error(e.getMessage(), e);
-		} catch (SAXException e) {
-			log.error(e.getMessage(), e);
-		}
-
-		return loginTime;
-	}
+	}	
+	
 }

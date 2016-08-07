@@ -19,6 +19,9 @@
 		<property name="aheadTime">
 			<value>${aheadTime}</value>
 		</property>
+		<property name="mode">
+			<value>${mode}</value>
+		</property>
 		<property name="cookie">
 			<value>${cookie}</value>
 		</property>
