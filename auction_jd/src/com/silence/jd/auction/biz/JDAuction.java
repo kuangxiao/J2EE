@@ -28,17 +28,21 @@ public class JDAuction {
 	/**
 	 * 使用同一个conversation可以自动保持session
 	 */
-	private static WebConversation conversation = new WebConversation();
+	public static WebConversation conversation = new WebConversation();
 	public static WebResponse webResponse = null;
 	public static Long lastLoginTime = null;
 	public static boolean isMyPrice = false;
 	public static boolean isExceededMaxPrice = false;
 
-	public transient int currentPrice = 0;
+	public transient int initialPrice = 1;
+	public transient int currentPrice = 1;
 	public transient int auctionStatus = 0; // 拍卖状态：0-未开始；1-正在进行；2-结束或一口价；
-	public transient int myPrice = 0;
+	public transient int myPrice = 1;
 	public transient int stockNum = 0;// 库存
 	public transient long remainTime = 0;// 剩余时间（毫秒）：-1-已结束 ；
+
+	public String jsonp = "jsonp";
+	public int jsonpCount = 0;
 
 	/**
 	 * 禁用js，防止自动跳转，全部使用手工提交
@@ -79,6 +83,7 @@ public class JDAuction {
 
 		WebRequest bidRecordReq = new GetMethodWebRequest(AuctionConstant.URL_BID_RECORDS + urlParams);
 		bidRecordReq.setHeaderField("Host", "dbditem.jd.com");
+		bidRecordReq.setHeaderField("Connection", "keep-alive");
 		bidRecordReq.setHeaderField("Referer", "http://dbditem.jd.com/" + paimaiId);
 		bidRecordReq.setHeaderField("X-Requested-With", "XMLHttpRequest");
 		setCookie(bidRecordReq);
@@ -88,45 +93,105 @@ public class JDAuction {
 			String recordJsonStr = webResponse.getText();
 			log.info("recordJsonStr==>" + recordJsonStr);
 			JSONObject jsonObj = JSONObject.fromObject(recordJsonStr);
-			currentPrice = jsonObj.optInt("currentPrice", 0);
-			auctionStatus = jsonObj.optInt("auctionStatus", 0);
-			remainTime = jsonObj.optInt("remainTime", 0);
-			stockNum = jsonObj.optInt("stockNum", 0);
-			if (currentPrice > this.getMaxPrice()) {
-				isExceededMaxPrice = true;
-			}
+			int tempCurrentPrice = jsonObj.optInt("currentPrice", 1);
+			if (tempCurrentPrice > currentPrice) {
+				currentPrice = tempCurrentPrice;
+				if (currentPrice > getMaxPrice()) {
+					isExceededMaxPrice = true;
+				}
+			}			
+			auctionStatus = jsonObj.optInt("auctionStatus", 1);
+			remainTime = jsonObj.optInt("remainTime", 1);
+			stockNum = jsonObj.optInt("stockNum", 1);
+
 			log.info("*** in queryAuctionInfo(): currentPrice = " + currentPrice + ", auctionStatus=" + auctionStatus
 					+ ", remainTime=" + remainTime + "(" + timeBetweenText(remainTime) + "), stockNum=" + stockNum);
 
 			return currentPrice;
+
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
 
-		return 0;
+		return 1;
+	}
+
+	public int queryAuctionInfoM() {
+		log.info("--- in queryAuctionInfoM(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") XHR get ---");
+		jsonpCount++;
+		// http://dbauction.jd.com/paimai/json/current/englishquery?paimaiId=13042813&skuId=0&start=0&end=4&_t=1470551762363&_=1470551762364&callback=jsonp34
+		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&start=0&end=4&_t=" + System.currentTimeMillis()
+				/ 1000 + "&_=" + System.currentTimeMillis() / 1000 + "&callback=jsonp" + jsonpCount;
+
+		WebRequest bidRecordReq = new GetMethodWebRequest(AuctionConstant.URL_M_BID_RECORDS + urlParams);
+		bidRecordReq.setHeaderField("Accept", "*/*");
+		bidRecordReq.setHeaderField("Accept-Encoding", "gzip, deflate, sdch");
+		bidRecordReq.setHeaderField("Accept-Language", "zh-CN,zh;q=0.8");
+		bidRecordReq.setHeaderField("Connection", "keep-alive");
+		bidRecordReq.setHeaderField("Host", "dbauction.jd.com");
+		bidRecordReq
+				.setHeaderField(
+						"Referer",
+						"http://duobao.m.jd.com/duobao/item/detail.html?paimaiId="
+								+ getPaimaiId()
+								+ "&auctionType=5&from=jingdou&resourceType=jdapp_share&resourceValue=ShareMore&utm_source=androidapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=ShareMore");
+		bidRecordReq
+				.setHeaderField("User-Agent",
+						"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36");
+		setCookie(bidRecordReq);
+
+		try {
+			webResponse = conversation.getResponse(bidRecordReq);
+			String recordJsonStr = webResponse.getText();
+			log.info("recordJsonStr==>" + recordJsonStr);
+			JSONObject jsonObj = JSONObject.fromObject(recordJsonStr.substring(recordJsonStr.indexOf('(') + 1,
+					recordJsonStr.indexOf(')')));
+			JSONObject jsonData = jsonObj.optJSONObject("data");
+			int tempCurrentPrice = jsonData.optInt("currentPrice", 1);
+			if (tempCurrentPrice > currentPrice) {
+				currentPrice = tempCurrentPrice;
+				if (currentPrice > getMaxPrice()) {
+					isExceededMaxPrice = true;
+				}
+			}			
+			auctionStatus = jsonData.optInt("auctionStatus", 1);
+			remainTime = jsonData.optInt("remainTime", 1);
+			stockNum = jsonData.optInt("stockNum", 1);
+			log.info("*** in queryAuctionInfoM(): currentPrice = " + currentPrice + ", auctionStatus=" + auctionStatus
+					+ ", remainTime=" + remainTime + "(" + timeBetweenText(remainTime) + "), stockNum=" + stockNum);
+
+			return currentPrice;
+
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+
+		return 1;
 	}
 
 	/**
-	 * 加价
+	 * 加价，服务器先判断价格，再判断拍卖时候结束。
 	 * 
 	 * {"message":"出价成功","result":200} {"message":"不能低于当前价","result":561}
 	 * 
 	 * @return
 	 */
 	public boolean increPrice() {
-		log.info("--- in increPrice(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") XHR get ---");
-
 		boolean result = false;
 		int responseCode = 0;
 		int newPrice = getNewPrice();
 		// http://dbditem.jd.com/services/bid.action?t=411891&paimaiId=12866823&price=1002&proxyFlag=0&bidSource=0
 		String urlParams = "?t=" + getRamdomNumber() + "&paimaiId=" + getPaimaiId() + "&price=" + newPrice
 				+ "&proxyFlag=0&bidSource=0";
+		log.info("$$$ in increPrice(" + getPaimaiId() + "[MyMax-" + getMaxPrice() + ",newPrice-" + newPrice + "]"
+				+ ") $$$");
 		WebRequest addPriceReq = new GetMethodWebRequest(AuctionConstant.URL_INCRE_PRICE + urlParams);
 		addPriceReq.setHeaderField("Host", "dbditem.jd.com");
+		addPriceReq.setHeaderField("Connection", "keep-alive");
 		addPriceReq.setHeaderField("Referer", "http://dbditem.jd.com/" + paimaiId);
 		addPriceReq.setHeaderField("X-Requested-With", "XMLHttpRequest");
 		setCookie(addPriceReq);
+
 		try {
 			webResponse = conversation.getResponse(addPriceReq);
 			String responseText = webResponse.getText();
@@ -157,54 +222,65 @@ public class JDAuction {
 	 * 不断地出价 有没结束可以通过 1- 时间比较判断；2-状态（auctionStatus==2）判断。
 	 * 注意：auctionStatus==0可能已经开始了！
 	 */
-	public void bid() {
-		log.info("--- in bid(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+	public void queryCurrentPrice() {
+		log.info("--- in queryCurrentPrice(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
 
 		while (!isOver()) {
 
-			queryAuctionInfoAsync();	
-			
-			checkAndBid();			
-			
+			queryAuctionInfoMAsync();
+
 			try {
 				Thread.sleep(AuctionConstant.QUERRING_SLEEP_TIME);
 			} catch (InterruptedException e) {
 				log.error(e.getMessage(), e);
 			}
-			
 		}
 
 		// 拍卖结束
-		log.info("*** in bid(): bid over! auctionStatus=" + auctionStatus + ", isExceededMaxPrice(" + currentPrice
-				+ ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());	
+		log.info("*** in queryCurrentPrice(): bid over! auctionStatus=" + auctionStatus + ", isExceededMaxPrice("
+				+ currentPrice + ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());
 
 	}
-	
-	public void checkAndBid() {
-		log.info("--- in checkAndBid(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
-		
-		if( System.currentTimeMillis() >= AuctionConstant.BIDDING_DEADLINE ){
-			if( currentPrice == 0 ){
-				// 还没拿到最新的价格，就使用自己的能接受的最高价
-				currentPrice = getMaxPrice();
-			}
-			if( !isOver() && !isMyPrice()){
-				increPriceAsync();
-			}else{
-				log.info("*** in bid(): give up! auctionStatus=" + auctionStatus
-						+ ", isExceededMaxPrice(" + currentPrice + ")=" + isExceededMaxPrice + ", isMyPrice("
-						+ myPrice + ")==>" + isMyPrice());
-			}				
+
+	public void bid() {
+		log.info("$$$ in bid(" + getPaimaiId() + "[MyMax-" + getMaxPrice() + ",Current-" + currentPrice + "]" + ") $$$");
+
+		if (currentPrice > getMaxPrice()) {
+			// 价格超出心里预期，就使用自己的能接受的最高价
+			currentPrice = getMaxPrice();
+		}
+
+		if (!isMyPrice()) {
+			increPrice();
+		} else {
+			log.info("*** in bid(): give up! auctionStatus=" + auctionStatus + ", isExceededMaxPrice(" + currentPrice
+					+ ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());
 		}
 	}
-	
+
+	/**
+	 * 异步获取拍卖的最新信息。
+	 */
+	public void queryAuctionInfoMAsync() {
+		log.info("--- in queryAuctionInfoMAsync(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+
+		new Thread(new Runnable() {
+			public void run() {
+				queryAuctionInfoM();// 此方法会阻塞
+			}
+
+		}).start();
+	}
+
 	/**
 	 * 异步获取拍卖的最新信息。
 	 */
 	public void queryAuctionInfoAsync() {
+		log.info("--- in queryAuctionInfoAsync(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+
 		new Thread(new Runnable() {
 			public void run() {
-				queryAuctionInfo();// 此方法会阻塞				
+				queryAuctionInfo();// 此方法会阻塞
 			}
 
 		}).start();
@@ -215,17 +291,17 @@ public class JDAuction {
 	 */
 	public void increPriceAsync() {
 		new Thread(new Runnable() {
-			public void run() {		
-				increPrice();			
+			public void run() {
+				increPrice();
 			}
 		}).start();
 	}
-	
+
 	/**
 	 * 同步出一次价。
 	 */
-	public void bidOnce(){
-		queryAuctionInfo();// 此方法会阻塞	
+	public void bidOnce() {
+		queryAuctionInfo();// 此方法会阻塞
 		increPrice();
 	}
 
@@ -243,7 +319,7 @@ public class JDAuction {
 	}
 
 	public boolean isOver() {
-		return auctionStatus == 2 || isExceededMaxPrice || remainTime <= 0;
+		return auctionStatus == 2;
 	}
 
 	/**
@@ -273,15 +349,16 @@ public class JDAuction {
 		long hours = (long) Math.floor(remainTime / hourOfMil);
 		long minutes = (long) Math.floor(minuteOffset / minOfMil);
 		long seconds = (long) Math.floor(seccondOffset / secOfMil);
+		long mills = (long) seccondOffset % secOfMil;
 
 		if (hours > 0) {
-			return rightZeroStr(hours) + "时" + rightZeroStr(minutes) + "分" + rightZeroStr(seconds) + "秒";
+			return rightZeroStr(hours) + "时" + rightZeroStr(minutes) + "分" + rightZeroStr(seconds) + "秒" + mills + "毫秒";
 		} else if (minutes > 0) {
-			return rightZeroStr(minutes) + "分" + rightZeroStr(seconds) + "秒";
+			return rightZeroStr(minutes) + "分" + rightZeroStr(seconds) + "秒" + mills + "毫秒";
 		} else if (seconds > 0) {
-			return rightZeroStr(seconds) + "秒";
+			return rightZeroStr(seconds) + "秒" + mills + "毫秒";
 		} else {
-			return "0秒";
+			return "0秒" + mills + "毫秒";
 		}
 	}
 

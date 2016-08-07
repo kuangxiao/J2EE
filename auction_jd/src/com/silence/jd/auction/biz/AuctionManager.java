@@ -16,13 +16,14 @@ public class AuctionManager {
 
 	protected static Log log = LogFactory.getLog(AuctionManager.class);
 
-	final static int THREAD_POOL_SIZE = 5;
-	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);	
+	final static int THREAD_POOL_SIZE = 8;
+	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
 	static JDAuction jda = null;
 
 	public static void main(String[] args) {
 
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "classpath*:auction_spring.xml" });
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				new String[] { "classpath*:auction_spring.xml" });
 
 		jda = (JDAuction) context.getBean("auction");
 		initAuction();
@@ -38,33 +39,21 @@ public class AuctionManager {
 		switch (jda.auctionStatus) {
 		case 0:
 			// 尚未开始
-			scheduler.schedule(new Runnable() {
-				@Override
-				public void run() {
-					initAuction();
-				}
-			}, jda.remainTime + 99000L, TimeUnit.MILLISECONDS);
-			log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime + 59000L) + " init again ***");
+			scheduleInition();
 			break;
-			
+
 		case 1:
 			// 进行中
-			AuctionConstant.BIDDING_DEADLINE = System.currentTimeMillis() + jda.remainTime - AuctionConstant.BIDDING_RETENTION_TIME;
-			scheduler.schedule(new Runnable() {
-				@Override
-				public void run() {
-					jda.bid();
-				}
-			}, jda.remainTime - jda.getAheadTime(), TimeUnit.MILLISECONDS);
-			log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime - jda.getAheadTime())
-					+ " bid() ***");
+			scheduleQuery();
+			scheduleFirstBid();
 			break;
+
 		case 2:
 			// 已经结束
 		default:
 			log.info("*** in initAuction(): bid over! shutdown scheduler ***");
 			scheduler.shutdown();
-			System.out.println("press enter to exit >>>");
+			log.warn("press enter to exit >>>");
 			try {
 				new BufferedReader(new InputStreamReader(System.in)).readLine();
 			} catch (IOException e) {
@@ -75,4 +64,50 @@ public class AuctionManager {
 		}
 	}
 
+	public static void scheduleInition() {
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				initAuction();
+			}
+		}, jda.remainTime + 99000L, TimeUnit.MILLISECONDS);
+		log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime + 59000L)
+				+ " init again ***");
+	}
+
+	public static void scheduleQuery() {
+		long startQueryTime = jda.remainTime - jda.getAheadTime();
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				jda.queryCurrentPrice();
+			}
+		}, startQueryTime, TimeUnit.MILLISECONDS);
+		log.info("*** in initAuction(): after " + startQueryTime + "[" + JDAuction.timeBetweenText(startQueryTime)
+				+ "]" + " queryCurrentPrice() ***");
+	}
+
+	public static void scheduleFirstBid() {
+		long firtBidTime = jda.remainTime - AuctionConstant.BIDDING_RETENTION_TIME;
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				jda.bid();
+			}
+		}, firtBidTime, TimeUnit.MILLISECONDS);
+		log.info("*** in initAuction(): after " + firtBidTime + "[" + JDAuction.timeBetweenText(firtBidTime) + "]"
+				+ " do first bid() ***");
+	}
+
+	public static void scheduleSecondBid() {
+		long secondBidTime = jda.remainTime - AuctionConstant.BIDDING_RETENTION_TIME + 511L;
+		scheduler.schedule(new Runnable() {
+			@Override
+			public void run() {
+				jda.bid();
+			}
+		}, secondBidTime, TimeUnit.MILLISECONDS);
+		log.info("*** in initAuction(): after " + secondBidTime + "[" + JDAuction.timeBetweenText(secondBidTime) + "]"
+				+ " do second bid() ***");
+	}
 }
