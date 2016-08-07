@@ -44,9 +44,9 @@ public class AuctionManager {
 
 		case 1:
 			// 进行中
-			if( jda.getMode() == 0 ){// 询价投标模式
+			if (jda.getMode() == 0) {// 询价投标模式
 				scheduleQuery();
-			}			
+			}
 			scheduleFirstBid();
 			break;
 

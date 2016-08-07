@@ -96,7 +96,7 @@ public class JDAuction {
 				if (currentPrice > getMaxPrice()) {
 					isExceededMaxPrice = true;
 				}
-			}			
+			}
 			auctionStatus = jsonObj.optInt("auctionStatus", 1);
 			remainTime = jsonObj.optInt("remainTime", 1);
 			stockNum = jsonObj.optInt("stockNum", 1);
@@ -150,7 +150,7 @@ public class JDAuction {
 				if (currentPrice > getMaxPrice()) {
 					isExceededMaxPrice = true;
 				}
-			}			
+			}
 			auctionStatus = jsonData.optInt("auctionStatus", 1);
 			remainTime = jsonData.optInt("remainTime", 1);
 			stockNum = jsonData.optInt("stockNum", 1);
@@ -167,22 +167,22 @@ public class JDAuction {
 	}
 
 	/**
-	 * 投标，服务器先判断价格，再判断拍卖时候结束。
+	 * 投标。
 	 * 
-	 * {"message":"出价成功","result":200} {"message":"不能低于当前价","result":561}
+	 * {"message":"出价成功","result":200} 
+	 * {"message":"不能低于当前价","result":561}
 	 * 
 	 * @return
 	 */
 	public boolean bid() {
-		
+
 		boolean result = false;
 		int responseCode = 0;
-		int newPrice = getNewPrice();	
+		int newPrice = getNewPrice();
 		// http://dbditem.jd.com/services/bid.action?t=411891&paimaiId=12866823&price=1002&proxyFlag=0&bidSource=0
 		String urlParams = "?t=" + getRamdomNumber() + "&paimaiId=" + getPaimaiId() + "&price=" + newPrice
 				+ "&proxyFlag=0&bidSource=0";
-		log.info("$$$ in bid(" + getPaimaiId() + "[maxPrice-" + getMaxPrice() + ",bidPrice-" + newPrice + "]"
-				+ ") $$$");
+		log.info("$$$ in bid(" + getPaimaiId() + "[maxPrice-" + getMaxPrice() + ",bidPrice-" + newPrice + "]" + ") $$$");
 		WebRequest addPriceReq = new GetMethodWebRequest(AuctionConstant.URL_BID + urlParams);
 		addPriceReq.setHeaderField("Host", "dbditem.jd.com");
 		addPriceReq.setHeaderField("Connection", "keep-alive");
@@ -213,10 +213,10 @@ public class JDAuction {
 		log.info("*** in increPrice(): result=" + result + ", myPrice == newPrice(" + newPrice + ")"
 				+ ", responseCode==>" + responseCode);
 
-		if( getMode() != 0 ){
+		if (getMode() != 0) {
 			queryCurrentPrice();
 		}
-		
+
 		return result;
 	}
 
@@ -242,7 +242,7 @@ public class JDAuction {
 		log.info("*** in queryCurrentPrice(): bid over! auctionStatus=" + auctionStatus + ", isExceededMaxPrice("
 				+ currentPrice + ")=" + isExceededMaxPrice + ", isMyPrice(" + myPrice + ")==>" + isMyPrice());
 
-	}	
+	}
 
 	/**
 	 * 异步获取拍卖的最新信息。
@@ -270,7 +270,7 @@ public class JDAuction {
 			}
 
 		}).start();
-	}	
+	}
 
 	/**
 	 * 同步出一次价。
@@ -288,14 +288,14 @@ public class JDAuction {
 		if (inc < 1) {
 			inc = 1;
 		}
-		if( getMode() == 0 ){
-			if( currentPrice > getMaxPrice()){
+		if (getMode() == 0) {
+			if (currentPrice > getMaxPrice()) {
 				return getMaxPrice();
 			}
 			return currentPrice + inc;
-		}else{
+		} else {
 			return getMaxPrice();
-		}		
+		}
 	}
 
 	public boolean isMyPrice() {
@@ -389,7 +389,7 @@ public class JDAuction {
 	 * 能接受的最大价格
 	 */
 	private int maxPrice = 0;
-	
+
 	/**
 	 * 秒杀模式，0-使用参考价格；1-使用心里价格秒杀
 	 */
@@ -422,7 +422,7 @@ public class JDAuction {
 	public void setMaxPrice(int maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-	
+
 	public int getMode() {
 		return mode;
 	}
@@ -453,6 +453,6 @@ public class JDAuction {
 
 	public void setCookie(String cookie) {
 		this.cookie = cookie;
-	}	
-	
+	}
+
 }
