@@ -14,7 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class AuctionManager {
 
-	protected static Log log = LogFactory.getLog(AuctionManager.class);
+	protected static Log logger = LogFactory.getLog(AuctionManager.class);
 
 	final static int THREAD_POOL_SIZE = 8;
 	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
@@ -33,7 +33,7 @@ public class AuctionManager {
 	}
 
 	public static void initAuction() {
-		log.info("--- in initAuction(" + jda.getPaimaiId() + "[" + jda.getMaxPrice() + "]" + ") ---");
+		logger.info("--- in initAuction(" + jda.getPaimaiId() + "[" + jda.getMaxPrice() + "]" + ") ---");
 
 		jda.queryAuctionInfo();
 		switch (jda.auctionStatus) {
@@ -45,7 +45,7 @@ public class AuctionManager {
 		case 1:
 			// 进行中
 			if (jda.getMode() == 0) {// 询价投标模式
-				scheduleQuery();
+				scheduleQueryPrice();
 			}
 			scheduleFirstBid();
 			break;
@@ -53,13 +53,13 @@ public class AuctionManager {
 		case 2:
 			// 已经结束
 		default:
-			log.info("*** in initAuction(): bid over! shutdown scheduler ***");
+			logger.info("*** in initAuction(): bid over! shutdown scheduler ***");
 			scheduler.shutdown();
-			log.warn("press enter to exit >>>");
+			logger.warn("press enter to exit >>>");
 			try {
 				new BufferedReader(new InputStreamReader(System.in)).readLine();
 			} catch (IOException e) {
-				log.error(e.getMessage(), e);
+				logger.error(e.getMessage(), e);
 			}
 			System.exit(0);
 			break;
@@ -73,11 +73,11 @@ public class AuctionManager {
 				initAuction();
 			}
 		}, jda.remainTime + 99000L, TimeUnit.MILLISECONDS);
-		log.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime + 59000L)
+		logger.info("*** in initAuction(): after " + JDAuction.timeBetweenText(jda.remainTime + 59000L)
 				+ " init again ***");
 	}
 
-	public static void scheduleQuery() {
+	public static void scheduleQueryPrice() {
 		long startQueryTime = jda.remainTime - jda.getAheadTime();
 		scheduler.schedule(new Runnable() {
 			@Override
@@ -85,7 +85,7 @@ public class AuctionManager {
 				jda.queryCurrentPrice();
 			}
 		}, startQueryTime, TimeUnit.MILLISECONDS);
-		log.info("*** in initAuction(): after " + startQueryTime + "[" + JDAuction.timeBetweenText(startQueryTime)
+		logger.info("*** in initAuction(): after " + startQueryTime + "[" + JDAuction.timeBetweenText(startQueryTime)
 				+ "]" + " queryCurrentPrice() ***");
 	}
 
@@ -97,7 +97,7 @@ public class AuctionManager {
 				jda.bid();
 			}
 		}, firtBidTime, TimeUnit.MILLISECONDS);
-		log.info("*** in initAuction(): after " + firtBidTime + "[" + JDAuction.timeBetweenText(firtBidTime) + "]"
+		logger.info("*** in initAuction(): after " + firtBidTime + "[" + JDAuction.timeBetweenText(firtBidTime) + "]"
 				+ " do first bid() ***");
 	}
 
@@ -109,7 +109,7 @@ public class AuctionManager {
 				jda.bid();
 			}
 		}, secondBidTime, TimeUnit.MILLISECONDS);
-		log.info("*** in initAuction(): after " + secondBidTime + "[" + JDAuction.timeBetweenText(secondBidTime) + "]"
+		logger.info("*** in initAuction(): after " + secondBidTime + "[" + JDAuction.timeBetweenText(secondBidTime) + "]"
 				+ " do second bid() ***");
 	}
 }
