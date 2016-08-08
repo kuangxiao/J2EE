@@ -101,7 +101,7 @@ public class JDAuction {
 			remainTime = jsonObj.optInt("remainTime", 1);
 			stockNum = jsonObj.optInt("stockNum", 1);
 
-			logger.info("*** in queryAuctionInfo(): currentPrice = " + currentPrice + ", auctionStatus=" + auctionStatus
+			logger.info("*** in queryAuctionInfo(): currentPrice=" + currentPrice + ", auctionStatus=" + auctionStatus
 					+ ", remainTime=" + remainTime + "(" + timeBetweenText(remainTime) + "), stockNum=" + stockNum);
 
 			return currentPrice;
@@ -150,7 +150,7 @@ public class JDAuction {
 			auctionStatus = jsonData.optInt("auctionStatus", 1);
 			remainTime = jsonData.optInt("remainTime", 1);
 			stockNum = jsonData.optInt("stockNum", 1);
-			logger.info("*** in queryAuctionInfoM(): currentPrice = " + currentPrice + ", auctionStatus=" + auctionStatus
+			logger.info("*** in queryAuctionInfoM(): currentPrice=" + currentPrice + ", auctionStatus=" + auctionStatus
 					+ ", remainTime=" + remainTime + "(" + timeBetweenText(remainTime) + "), stockNum=" + stockNum);
 
 			return currentPrice;
