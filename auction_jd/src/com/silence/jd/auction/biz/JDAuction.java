@@ -73,7 +73,7 @@ public class JDAuction {
 	 * @return
 	 */
 	public int queryAuctionInfo() {
-		logger.info("--- in queryAuctionInfo(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") XHR get ---");
+		logger.info("--- in queryAuctionInfo(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") XHR get ---");		
 
 		// http://dbditem.jd.com/json/current/englishquery?paimaiId=12863687&skuId=0&t=265688&start=0&end=9
 		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&t=" + getRamdomNumber() + "&start=0&end=4";
@@ -113,8 +113,8 @@ public class JDAuction {
 		return 1;
 	}
 
-	public int queryAuctionInfoM() {
-		logger.info("--- in queryAuctionInfoM(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") XHR get ---");		
+	public int queryAuctionInfoM() {			
+		logger.info("--- in queryAuctionInfoM(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") XHR get ---");
 		
 		// http://dbauction.jd.com/paimai/json/current/englishquery?paimaiId=13042813&skuId=0&start=0&end=4&_t=1470551762363&_=1470551762364&callback=jsonp34
 		String urlParams = "?paimaiId=" + getPaimaiId() + "&skuId=0&start=0&end=4&_t=" + System.currentTimeMillis()
@@ -177,7 +177,7 @@ public class JDAuction {
 		// http://dbditem.jd.com/services/bid.action?t=411891&paimaiId=12866823&price=1002&proxyFlag=0&bidSource=0
 		String urlParams = "?t=" + getRamdomNumber() + "&paimaiId=" + getPaimaiId() + "&price=" + newPrice
 				+ "&proxyFlag=0&bidSource=0";
-		logger.info("$$$ in bid(" + getPaimaiId() + "[maxPrice-" + getMaxPrice() + ",bidPrice-" + newPrice + "]" + ") $$$");
+		logger.info("$$$ in bid(" + getPaimaiId() +"[mode=" + getMode() + ",maxPrice=" + getMaxPrice() + ",bidPrice=" + newPrice + "]" + ") $$$");		
 		
 		WebRequest addPriceReq = new GetMethodWebRequest(AuctionConstant.URL_BID + urlParams);
 		addPriceReq.setHeaderField("Host", "dbditem.jd.com");
@@ -220,8 +220,8 @@ public class JDAuction {
 	 * 不断地出价 有没结束可以通过 1- 时间比较判断；2-状态（auctionStatus==2）判断。
 	 * 注意：auctionStatus==0可能已经开始了！
 	 */
-	public void queryCurrentPrice() {
-		logger.info("--- in queryCurrentPrice(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+	public void queryCurrentPrice() {		
+		logger.info("--- in queryCurrentPrice(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") ---");
 
 		while (!isOver()) {
 
@@ -243,8 +243,8 @@ public class JDAuction {
 	/**
 	 * 异步获取拍卖的最新信息。
 	 */
-	public void queryAuctionInfoMAsync() {
-		logger.info("--- in queryAuctionInfoMAsync(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+	public void queryAuctionInfoMAsync() {		
+		logger.info("--- in queryAuctionInfoMAsync(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") ---");
 
 		new Thread(new Runnable() {
 			public void run() {
@@ -258,7 +258,7 @@ public class JDAuction {
 	 * 异步获取拍卖的最新信息。
 	 */
 	public void queryAuctionInfoAsync() {
-		logger.info("--- in queryAuctionInfoAsync(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+		logger.info("--- in queryAuctionInfoAsync(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") ---");
 
 		new Thread(new Runnable() {
 			public void run() {
@@ -272,7 +272,7 @@ public class JDAuction {
 	 * 同步出一次价。
 	 */
 	public void bidOnce() {
-		logger.info("--- in bidOnce(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+		logger.info("--- in bidOnce(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") ---");
 		
 		int oldMode = getMode();
 		setMode(0);
@@ -282,7 +282,7 @@ public class JDAuction {
 	}
 
 	public int getNewPrice() {
-		logger.info("--- in getNewPrice(" + getPaimaiId() + "[" + getMaxPrice() + "]" + ") ---");
+		logger.info("--- in getNewPrice(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") ---");
 		
 		int inc = new Random().nextInt(getIncrementPerTime());
 		if (inc < 1) {

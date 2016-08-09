@@ -33,7 +33,7 @@ public class AuctionManager {
 	}
 
 	public static void initAuction() {
-		logger.info("--- in initAuction(" + jda.getPaimaiId() + "[" + jda.getMaxPrice() + "]" + ") ---");
+		logger.info("--- in initAuction(" + jda.getPaimaiId() + "[" + jda.getMode() + ","+ jda.getMaxPrice() + "]" + ") ---");
 
 		jda.queryAuctionInfo();
 		switch (jda.auctionStatus) {

@@ -15,9 +15,9 @@ public class AuctionConstant {
 	public static final String URL_BID = "http://dbditem.jd.com/services/bid.action";
 
 	// 获取价格主线程休眠间隔
-	public static long QUERRING_SLEEP_TIME = 78L;
+	public static long QUERRING_SLEEP_TIME = 58L;
 
 	// 投标保留时间
-	public static long BIDDING_RETENTION_TIME = 1100L;	
+	public static long BIDDING_RETENTION_TIME = 1230;
 
 }
