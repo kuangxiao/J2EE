@@ -15,8 +15,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class AuctionManager {
 
 	protected static Log logger = LogFactory.getLog(AuctionManager.class);
-
-	final static int THREAD_POOL_SIZE = 8;
+	
+	final static int THREAD_POOL_SIZE = 4;
 	final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(THREAD_POOL_SIZE);
 	static JDAuction jda = null;
 
