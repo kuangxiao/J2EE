@@ -52,9 +52,8 @@ public class AuctionManager {
 
 		case 2:
 			// 已经结束
-		default:
 			logger.info("*** in initAuction(): bid over! shutdown scheduler ***");
-			scheduler.shutdown();
+			scheduler.shutdown();	
 			logger.warn("press enter to exit >>>");
 			try {
 				new BufferedReader(new InputStreamReader(System.in)).readLine();
@@ -63,6 +62,10 @@ public class AuctionManager {
 			}
 			System.exit(0);
 			break;
+			
+		default:	
+			logger.info("!!! in initAuction(): Something wrong happened !!!");
+			break;			
 		}
 	}
 
@@ -112,4 +115,5 @@ public class AuctionManager {
 		logger.info("*** in initAuction(): after " + secondBidTime + "[" + JDAuction.timeBetweenText(secondBidTime) + "]"
 				+ " do second bid() ***");
 	}
+	
 }
