@@ -1,5 +1,6 @@
 package com.silence.jd.auction.biz;
 
+import java.awt.Toolkit;
 import java.util.Random;
 
 import net.sf.json.JSONObject;
@@ -196,6 +197,7 @@ public class JDAuction {
 			case 200:// 出价成功
 				myPrice = newPrice;
 				result = true;
+				Toolkit.getDefaultToolkit().beep();
 				break;
 			default:// 出价失败
 				result = false;
