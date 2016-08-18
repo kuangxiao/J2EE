@@ -68,7 +68,7 @@ public class JDAuction {
 	}
 
 	/**
-	 * 查询拍卖详情。
+	 * 从PC端查询拍卖详情。
 	 * 
 	 * @return
 	 */
@@ -113,6 +113,11 @@ public class JDAuction {
 		return 1;
 	}
 
+	/**
+	 * 从移动端查询拍卖详情。
+	 * 
+	 * @return
+	 */
 	public int queryAuctionInfoM() {
 		logger.info("--- in queryAuctionInfoM(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") XHR get ---");
 
@@ -244,6 +249,13 @@ public class JDAuction {
 
 	}
 
+	/**
+	 * 播放音乐（异步）。
+	 * 
+	 *@Title playMusicAsync
+	 *@author 王涛(Silence)
+	 *@date 2016年8月18日 上午11:25:10
+	 */
 	public void playMusicAsync() {
 		logger.info("--- in playMusicAsync(" + getPaimaiId() + "[" + getMode() + "," + getMaxPrice() + "]" + ") ---");
 
