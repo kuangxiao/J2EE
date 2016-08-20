@@ -18,6 +18,6 @@ public class AuctionConstant {
 	public static long QUERRING_SLEEP_TIME = 58L;
 
 	// 投标保留时间
-	public static long BIDDING_RETENTION_TIME = 1230;
+	public static long BIDDING_RETENTION_TIME = 1260;
 
 }
