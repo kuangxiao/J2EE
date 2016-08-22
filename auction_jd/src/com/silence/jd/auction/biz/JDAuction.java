@@ -173,6 +173,7 @@ public class JDAuction {
 	 * {"message":"出价成功","result":200} 
 	 * {"message":"拍卖已经结束","result":516}
 	 * {"message":"不能低于当前价","result":561}
+	 * {"message":"不能高于最高加价幅度","result":563}
 	 * {"message":"已经结束","result":567} 
 	 * 
 	 * @return
