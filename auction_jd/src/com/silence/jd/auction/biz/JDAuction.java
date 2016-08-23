@@ -171,6 +171,7 @@ public class JDAuction {
 	 * 投标。
 	 * 
 	 * {"message":"出价成功","result":200} 
+	 * {"message":"尚未登录，稍后将跳转至登陆页面","result":"login"}
 	 * {"message":"拍卖已经结束","result":516}
 	 * {"message":"不能低于当前价","result":561}
 	 * {"message":"不能高于最高加价幅度","result":563}
