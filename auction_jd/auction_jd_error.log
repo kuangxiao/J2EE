@@ -1,0 +1,2 @@
+16:51:27,730 [ERROR]-[AuctionManager.java] *** in initAuction(): bid over! shutdown scheduler ***
+16:51:28,184 [WARN]-[AuctionManager.java] press enter to exit >>>
