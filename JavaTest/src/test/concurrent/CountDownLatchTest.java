@@ -33,7 +33,7 @@ public class CountDownLatchTest {
 					}
 				}
 			};
-			
+
 			exec.submit(run);
 		}
 
@@ -43,7 +43,7 @@ public class CountDownLatchTest {
 
 		// 等待end变为0，即所有选手到达终点
 		end.await();
-		
+
 		System.out.println("Game Over");
 		exec.shutdown();
 	}

@@ -7,13 +7,12 @@ public class ClassTest {
 		System.out.println("==>" + int[].class.getCanonicalName());
 		System.out.println("==>" + int[].class.getSimpleName());
 		System.out.println("==>" + String[].class.getCanonicalName());
-		System.out.println("==>" + String[].class.getSimpleName());	
-		
-		System.out.println("==>" + new ClassTest().getClass().getSimpleName());	
-		
+		System.out.println("==>" + String[].class.getSimpleName());
+
+		System.out.println("==>" + new ClassTest().getClass().getSimpleName());
+
 		Class<?> strClazz = String.class;
 		Class<?> vClazz = Void.class;
 	}
-	
-	
+
 }

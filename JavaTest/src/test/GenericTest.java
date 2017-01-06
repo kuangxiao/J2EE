@@ -16,7 +16,7 @@ public class GenericTest {
 			i.print();
 			System.out.println(i.getParamType());
 		}
-		
+
 	}
 
 	public static class Protocol<C> {
@@ -28,12 +28,12 @@ public class GenericTest {
 		}
 
 		public void print() {
-			System.out.println("-- "+clazz.getClass());
+			System.out.println("-- " + clazz.getClass());
 		}
 
 		public Class<?> getParamType() {
 			return clazz;
 		}
-		
+
 	}
 }

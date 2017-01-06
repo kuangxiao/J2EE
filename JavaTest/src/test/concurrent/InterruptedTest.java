@@ -1,4 +1,5 @@
 package test.concurrent;
+
 public class InterruptedTest implements Runnable {
 	@Override
 	public void run() {
@@ -6,14 +7,11 @@ public class InterruptedTest implements Runnable {
 			try {
 				System.out.println("Thread sleep()");
 				Thread.sleep(30000);
-				System.out.println("A1>>>, Thread.currentThread().isInterrupted() = "
-						+ Thread.currentThread().isInterrupted());
+				System.out.println("A1>>>, Thread.currentThread().isInterrupted() = " + Thread.currentThread().isInterrupted());
 			} catch (InterruptedException e) {
-				System.out.println("A2>>>, Thread.currentThread().isInterrupted() = "
-						+ Thread.currentThread().isInterrupted());
+				System.out.println("A2>>>, Thread.currentThread().isInterrupted() = " + Thread.currentThread().isInterrupted());
 				Thread.currentThread().interrupt();
-				System.out.println("A3>>>, Thread.currentThread().isInterrupted() = "
-						+ Thread.currentThread().isInterrupted());
+				System.out.println("A3>>>, Thread.currentThread().isInterrupted() = " + Thread.currentThread().isInterrupted());
 			}
 		}
 	}

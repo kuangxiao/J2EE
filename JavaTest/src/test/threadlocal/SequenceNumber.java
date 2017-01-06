@@ -1,7 +1,7 @@
 package test.threadlocal;
 
 public class SequenceNumber {
-	
+
 	// 定义匿名子类创建ThreadLocal的变量
 	private static ThreadLocal<Integer> seqNum = new ThreadLocal<Integer>() {
 		// 覆盖初始化方法
@@ -17,7 +17,7 @@ public class SequenceNumber {
 	}
 
 	private static class TestClient extends Thread {
-		
+
 		private SequenceNumber sn;
 
 		public TestClient(SequenceNumber sn) {
@@ -41,10 +41,10 @@ public class SequenceNumber {
 		TestClient t1 = new TestClient(sn);
 		TestClient t2 = new TestClient(sn);
 		TestClient t3 = new TestClient(sn);
-		
+
 		t1.start();
 		t2.start();
 		t3.start();
 	}
-	
+
 }

@@ -27,5 +27,5 @@ class CloneTest implements Cloneable {
 		p.birth = (Date) birth.clone();
 		return p;
 	}
-	
+
 }

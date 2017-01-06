@@ -1,7 +1,7 @@
 package test.threadlocal;
 
 public class TestThreadLocal {
-	
+
 	private static final ThreadLocal<Integer> value = new ThreadLocal<Integer>() {
 		@Override
 		protected Integer initialValue() {
@@ -16,7 +16,7 @@ public class TestThreadLocal {
 	}
 
 	static class MyThread implements Runnable {
-		
+
 		private int index;
 
 		public MyThread(int index) {
