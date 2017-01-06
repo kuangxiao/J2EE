@@ -1,6 +1,6 @@
 package test;
 
-public class TestRecursive {
+public class RecursiveTest {
 
 	/**
 	 * @param args
@@ -16,4 +16,5 @@ public class TestRecursive {
 		}
 		System.out.println("Last: "+n);
 	}
+	
 }
