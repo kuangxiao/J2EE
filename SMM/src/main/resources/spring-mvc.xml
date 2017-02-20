@@ -53,4 +53,13 @@
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
 
+		
+	<!-- 实例化swaggerconfig 建议放在mvc:annotation-driven 之后 -->
+	<bean class="com.ht.controller.apidoc.SwaggerConfig" />	
+	<!-- 静态资源(js/image)的访问 -->
+	<mvc:resources location="/" mapping="/**.html" />
+	<mvc:default-servlet-handler />
+	
+	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
+
 </beans>
