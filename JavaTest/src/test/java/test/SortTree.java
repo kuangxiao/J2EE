@@ -1,15 +1,15 @@
 package test;
 
 public class SortTree {
-	
+
 	static TreeNode root = null; // 根
 
 	public static void main(String[] args) {
 		int[] arr = new int[] { 4, 3, 5, 6, 2, 1, 8, 7, 9 };
-		
+
 		createTree(arr);
 		pre(root);
-		
+
 		System.out.println(searchDataRecursion(root, 4));
 		System.out.println(searchDataRecursion(root, 3));
 		System.out.println(searchDataRecursion(root, 5));
