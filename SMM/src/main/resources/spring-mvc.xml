@@ -12,6 +12,9 @@
 	<context:component-scan base-package="com.cn.hnust" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	<!-- 静态资源(js/image)的访问 -->	
+	<mvc:default-servlet-handler />
 
 	<!-- 登录拦截 -->
 	<mvc:interceptors>
@@ -42,24 +45,15 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-
-	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+	
+	<!-- 文件上传配置 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 默认编码 -->
-		<property name="defaultEncoding" value="utf-8" />
-		<!-- 文件大小最大值 -->
-		<property name="maxUploadSize" value="10485760000" />
-		<!-- 内存中的最大值 -->
-		<property name="maxInMemorySize" value="40960" />
+		<!-- 指定所上传文件的总大小不能超过5000KB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+		<property name="maxUploadSize" value="300000000" />
 	</bean>
-
 		
 	<!-- 实例化swaggerconfig 建议放在mvc:annotation-driven 之后 -->
 	<bean class="com.ht.controller.apidoc.SwaggerConfig" />	
-	<!-- 静态资源(js/image)的访问 -->
-	<mvc:resources location="/" mapping="/**.html" />
-	<mvc:default-servlet-handler />
-	
 	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
 
 </beans>
