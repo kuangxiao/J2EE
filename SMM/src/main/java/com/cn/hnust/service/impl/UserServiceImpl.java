@@ -1,12 +1,11 @@
 package com.cn.hnust.service.impl;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.service.dao.UserMapper;
 import com.cn.hnust.service.domain.User;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {

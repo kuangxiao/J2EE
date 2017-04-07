@@ -1,10 +1,9 @@
 package org.zsl.testmybatis;
 
-import java.lang.annotation.Annotation;
-
+import com.cn.hnust.controller.UserController;
 import org.springframework.stereotype.Component;
 
-import com.cn.hnust.controller.UserController;
+import java.lang.annotation.Annotation;
 
 public class TestAnnotation {
 

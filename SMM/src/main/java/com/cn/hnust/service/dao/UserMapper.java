@@ -1,11 +1,11 @@
 package com.cn.hnust.service.dao;
 
-import org.springframework.stereotype.Repository;
-
 import com.cn.hnust.service.domain.User;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMapper {
+
 	int deleteByPrimaryKey(Integer id);
 
 	int insert(User record);

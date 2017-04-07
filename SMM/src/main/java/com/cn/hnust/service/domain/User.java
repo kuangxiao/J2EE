@@ -1,50 +1,50 @@
 package com.cn.hnust.service.domain;
 
 public class User {
-	
-	private Integer id;
-	private String userName;
-	private String password;
-	private Integer age;
-	private Integer none;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer id;
+    private String userName;
+    private String password;
+    private Integer age;
+    private Integer none;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName == null ? null : userName.trim();
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
 
-	public void setPassword(String password) {
-		this.password = password == null ? null : password.trim();
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Integer getAge() {
-		return age;
-	}
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    public Integer getAge() {
+        return age;
+    }
 
-	public Integer getNone() {
-		return none;
-	}
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-	public void setNone(Integer none) {
-		this.none = none;
-	}
+    public Integer getNone() {
+        return none;
+    }
+
+    public void setNone(Integer none) {
+        this.none = none;
+    }
 }
