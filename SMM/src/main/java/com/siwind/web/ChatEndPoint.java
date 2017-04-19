@@ -31,6 +31,7 @@ public class ChatEndPoint {
 		connections.add(this);
 		String message = String.format("* %s %s", sessionName, "has been connected.");
 		System.out.println(message);
+		
 		broadcast(message);
 	}
 
@@ -39,15 +40,17 @@ public class ChatEndPoint {
 		connections.remove(this);
 		String message = String.format("* %s %s", sessionName, "has disconnected.");
 		System.out.println(message);
+		
 		broadcast(message);
 	}
 
 	@OnMessage
 	public void onMessage(Session session, String message) {
 		// Never trust the client
-		//String filteredMessage = String.format("%s: %s", nickname, HTMLFilter.filter(message.toString()));
+		// String filteredMessage = String.format("%s: %s", nickname, HTMLFilter.filter(message.toString()));
 		String filteredMessage = String.format("%s: %s", sessionName, (message.toString()));
 		System.out.println(filteredMessage);
+		
 		broadcast(filteredMessage);
 	}
 
@@ -66,8 +69,10 @@ public class ChatEndPoint {
 					// Ignore
 				}
 				String message = String.format("* %s %s", client.sessionName, "has been disconnected.");
+				
 				broadcast(message);
 			}
 		}
 	}
+	
 }

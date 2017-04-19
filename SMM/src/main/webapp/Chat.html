@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>WebSocket Chat</title>
+
 <style type="text/css">
         input#chat {
             width: 510px
@@ -27,11 +28,11 @@
             margin: 0;
         }
 </style>
+
 <script type="application/javascript">
 
 		var wsUri = getWebSocketUri("/SMM/WSChat");
-		function getWebSocketUri( wsPath) {//example:  "/webapp/websocket-path"
-			
+		function getWebSocketUri( wsPath) {//example:  "/webapp/websocket-path"			
             return (window.location.protocol=="http:"?"ws://":"wss://") 
             			+ (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":" 
             			+ (document.location.port == "" ? "80" : document.location.port) 
@@ -118,7 +119,7 @@
             console.scrollTop = console.scrollHeight;
         });
 
-       // Chat.initialize();
+        // Chat.initialize();
         document.addEventListener("DOMContentLoaded", function() {
             // Remove elements with "noscript" class - <noscript> is not allowed in XHTML
             var noscripts = document.getElementsByClassName("noscript");
@@ -127,17 +128,17 @@
             }
         }, false);
 
-
 </script>
+
 </head>
+
 <body>
 	<div class="noscript">
-		<h2 style="color: #ff0000">Seems your browser doesn't support
-			Javascript! Websockets rely on Javascript being enabled. Please
-			enable Javascript and reload this page!</h2>
+		<h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets rely on Javascript being enabled. Please enable Javascript and reload this page!</h2>
 	</div>
+	
 	<div>
-	<div>
+	    <div>
             <button type="button" onclick="Chat.initialize();" >Open WebSocket</button>
             <button type="button" onclick="Chat.closeSocket();" >Close WebSocket</button>
         </div>
@@ -149,5 +150,7 @@
 			<div id="console" />
 		</div>
 	</div>
+	
 </body>
+
 </html>

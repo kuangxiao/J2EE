@@ -6,11 +6,12 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
 /**
- * @ServerEndpoint 注解是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务器端,
- * 注解的值将被用于监听用户连接的终端访问URL地址,客户端可以通过这个URL来连接到WebSocket服务器端
+ * @ServerEndpoint 娉ㄨВ鏄竴涓被灞傛鐨勬敞瑙ｏ紝瀹冪殑鍔熻兘涓昏鏄皢鐩墠鐨勭被瀹氫箟鎴愪竴涓獁ebsocket鏈嶅姟鍣ㄧ,
+ * 娉ㄨВ鐨勫�煎皢琚敤浜庣洃鍚敤鎴疯繛鎺ョ殑缁堢璁块棶URL鍦板潃,瀹㈡埛绔彲浠ラ�氳繃杩欎釜URL鏉ヨ繛鎺ュ埌WebSocket鏈嶅姟鍣ㄧ
  */
 @ServerEndpoint("/WSHello")
 public class HelloEndPoint {
+	
 	/**
      * @OnOpen allows us to intercept the creation of a new session.
      * The session class allows us to send data to the user.
@@ -53,7 +54,7 @@ public class HelloEndPoint {
     }
     
     /**
-     * 注意: OnError() 只能出现一次.   其中的参数都是可选的。
+     * 娉ㄦ剰: OnError() 鍙兘鍑虹幇涓�娆�.   鍏朵腑鐨勫弬鏁伴兘鏄彲閫夌殑銆�
      * @param session
      * @param t
      */
