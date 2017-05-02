@@ -16,7 +16,13 @@ public class GenericTest {
 			i.print();
 			System.out.println(i.getParamType());
 		}
+		
+		System.out.println(String.valueOf(get()));
 
+	}
+	
+	public static <T extends Exception> T get() {
+		return (T) new Exception();
 	}
 
 	public static class Protocol<C> {
