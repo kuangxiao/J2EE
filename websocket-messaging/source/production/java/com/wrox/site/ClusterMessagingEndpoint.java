@@ -28,6 +28,7 @@ import org.springframework.web.socket.server.standard.SpringConfigurator;
 @ServerEndpoint(value = "/services/Messaging/{securityCode}", encoders = { ClusterMessagingEndpoint.Codec.class }, decoders = { ClusterMessagingEndpoint.Codec.class }, configurator = SpringConfigurator.class)
 @ClientEndpoint(encoders = { ClusterMessagingEndpoint.Codec.class }, decoders = { ClusterMessagingEndpoint.Codec.class })
 public class ClusterMessagingEndpoint {
+	
 	private static final Logger log = LogManager.getLogger();
 
 	private Session session;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LogoutInterestedParty implements ApplicationListener<LogoutEvent> {
+	
 	private static final Logger log = LogManager.getLogger();
 
 	@Inject

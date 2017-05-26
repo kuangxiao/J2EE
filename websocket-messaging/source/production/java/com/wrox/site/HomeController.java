@@ -13,6 +13,7 @@ import com.wrox.config.annotation.WebController;
 
 @WebController
 public class HomeController {
+	
 	@Inject
 	ApplicationEventPublisher publisher;
 

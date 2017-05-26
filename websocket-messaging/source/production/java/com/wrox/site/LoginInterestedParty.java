@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginInterestedParty implements ApplicationListener<LoginEvent> {
+	
 	private static final Logger log = LogManager.getLogger();
 
 	@Inject

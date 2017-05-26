@@ -26,10 +26,12 @@ import org.springframework.util.StreamUtils;
 
 @Service
 public class ClusterManager implements ApplicationListener<ContextRefreshedEvent> {
+	
 	private static final Logger log = LogManager.getLogger();
 	private static final String HOST;
 	private static final int PORT = 6789;
 	private static final InetAddress GROUP;
+	
 	static {
 		try {
 			HOST = InetAddress.getLocalHost().getHostAddress();
