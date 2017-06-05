@@ -1,5 +1,8 @@
 package test;
 
+import java.util.Collections;
+import java.util.Map;
+
 public class ClassTest {
 
 	public static void main(String[] args) {
@@ -13,6 +16,13 @@ public class ClassTest {
 
 		Class<?> strClazz = String.class;
 		Class<?> vClazz = Void.class;
+		
+		Map<String,String> map = Collections.<String,String> emptyMap();
+		System.out.println("==>" + map.get(null));
+		
+		Long ten = new Long(10);
+		Long ten2 = new Long(10);
+		System.out.println( ten == ten2 );
 	}
 
 }

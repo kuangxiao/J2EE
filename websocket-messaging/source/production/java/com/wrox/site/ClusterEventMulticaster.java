@@ -19,6 +19,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 
 public class ClusterEventMulticaster extends SimpleApplicationEventMulticaster {
+	
 	private static final Logger log = LogManager.getLogger();
 
 	private final Set<ClusterMessagingEndpoint> endpoints = new HashSet<>();

@@ -42,6 +42,7 @@ import com.wrox.config.annotation.WebController;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.wrox.site", useDefaultFilters = false, includeFilters = @ComponentScan.Filter(WebController.class))
 public class WebServletContextConfiguration extends WebMvcConfigurerAdapter {
+	
 	@Inject
 	ObjectMapper objectMapper;
 	@Inject
