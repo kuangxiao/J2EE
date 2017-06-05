@@ -7,6 +7,9 @@ import java.io.Serializable;
 import org.springframework.context.ApplicationEvent;
 
 public class ClusterEvent extends ApplicationEvent implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private final Serializable serializableSource;
 	private boolean rebroadcasted;
 
@@ -32,4 +35,5 @@ public class ClusterEvent extends ApplicationEvent implements Serializable {
 		in.defaultReadObject();
 		this.source = this.serializableSource;
 	}
+
 }

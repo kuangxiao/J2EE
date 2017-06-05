@@ -54,8 +54,8 @@ public class ClusterManager implements ApplicationListener<ContextRefreshedEvent
 
 	@PostConstruct
 	public void listenForMulticastAnnouncements() throws Exception {
-		this.pingUrl = "http://" + HOST + ":8080" + this.servletContext.getContextPath() + "/ping";
-		this.messagingUrl = "ws://" + HOST + ":8080" + this.servletContext.getContextPath()
+		this.pingUrl = "http://" + HOST + ":8081" + this.servletContext.getContextPath() + "/ping";
+		this.messagingUrl = "ws://" + HOST + ":8081" + this.servletContext.getContextPath()
 				+ "/services/Messaging/a83teo83hou9883hha9";
 
 		synchronized (this.mutex) {
