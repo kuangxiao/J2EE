@@ -45,10 +45,13 @@ public class WebServletContextConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Inject
 	ObjectMapper objectMapper;
+	
 	@Inject
 	Marshaller marshaller;
+	
 	@Inject
 	Unmarshaller unmarshaller;
+	
 	@Inject
 	SpringValidatorAdapter validator;
 
