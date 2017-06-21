@@ -90,7 +90,7 @@ public class SortTree {
 /**
  * 节点类
  * 
- * @author admin
+ * @author Silence
  * 
  */
 class TreeNode {

@@ -14,7 +14,7 @@ class Wa implements Runnable {
 
 		try {
 			// 连接启动ZooKeeper
-			ZooKeeper zk = new ZooKeeper("127.0.0.1:2181", 500000, new Watcher() {
+			ZooKeeper zk = new ZooKeeper("192.168.2.6:2181", 500000, new Watcher() {
 				// 监控所有被触发的事件
 				public void process(WatchedEvent event) {
 					System.out.println("changing...");

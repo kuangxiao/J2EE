@@ -3,6 +3,7 @@ package test;
 import java.util.Date;
 
 class CloneTest implements Cloneable {
+	
 	private int age;
 	private String name;
 	private Date birth;
