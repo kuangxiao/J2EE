@@ -2,9 +2,6 @@ package test;
 
 public class RecursiveTest {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		recursive(1);
 	}
