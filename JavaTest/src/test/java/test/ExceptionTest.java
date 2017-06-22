@@ -2,9 +2,6 @@ package test;
 
 public class ExceptionTest {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		System.out.println(testReturn());
 	}
