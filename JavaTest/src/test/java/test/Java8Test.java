@@ -1,6 +1,7 @@
 package test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -24,21 +25,33 @@ public class Java8Test {
 		names2.add("Sina ");
 
 		Java8Test tester = new Java8Test();
+		
 		System.out.println("使用 Java 7 语法: ");
-
 		tester.sortUsingJava7(names1);
 		System.out.println(names1);
+		
 		System.out.println("使用 Java 8 语法: ");
-
 		tester.sortUsingJava8(names2);
 		System.out.println(names2);
+		
+		new Thread( ( ) -> { System.out.println(">>>>>>>>>>>>"); } ).start();
+		
+		List<String> features = Arrays.<String>asList("Lambdas", "Default Method", "Stream API", "Date and Time API");
+		features.forEach(n -> System.out.println(n));
+		features.forEach(System.out::println);
+		
+		List<String> myList = Arrays.asList("a1", "a2", "b1", "c2", "c1", "c0");  
+		myList.stream() 
+		        .filter( s -> s.startsWith("c") )  
+		        .map( String::toUpperCase )  
+		        .sorted()  
+		        .forEach( System.out::println ); 
 		
 	}
 
 	// 使用 java 7 排序
 	private void sortUsingJava7(List<String> names) {
-		Collections.sort(names, new Comparator<String>() {
-			
+		Collections.sort(names, new Comparator<String>() {			
 			@Override
 			public int compare(String s1, String s2) {
 				return s1.compareTo(s2);
@@ -48,7 +61,7 @@ public class Java8Test {
 
 	// 使用 java 8 排序
 	private void sortUsingJava8(List<String> names) {
-		Collections.sort(names, (s1, s2) -> s1.compareTo(s2));
+		Collections.sort( names, (s1, s2) -> s1.compareTo(s2) );
 	}
 	
 }
