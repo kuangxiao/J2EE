@@ -10,7 +10,7 @@
 
 	<properties>
 		<springframework.version>4.0.2.RELEASE</springframework.version>
-		<quartz.version>2.2.2</quartz.version>		
+		<quartz.version>2.3.2</quartz.version>		
 		<!-- 文件拷贝时的编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
