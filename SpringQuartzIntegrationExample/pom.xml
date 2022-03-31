@@ -9,7 +9,7 @@
   <name>SpringQuartzIntegrationExample</name>
 
 	<properties>
-		<springframework.version>4.0.2.RELEASE</springframework.version>
+		<springframework.version>5.3.18</springframework.version>
 		<quartz.version>2.2.2</quartz.version>		
 		<!-- 文件拷贝时的编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
